@@ -1,0 +1,13 @@
+numpy
+matplotlib
+pandas
+black
+pycodestyle
+jupyter
+pynvim
+plotly
+sqlalchemy
+tqdm
+python-dateutil
+dash
+flask
