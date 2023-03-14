@@ -1,4 +1,4 @@
-
+# %%
 from sqlalchemy import (
     Column,
     DateTime,
@@ -10,7 +10,6 @@ from sqlalchemy import (
     create_engine,
     Engine,
 )
-
 
 
 def create_engine_table() -> tuple[Engine, Table]:
@@ -36,5 +35,3 @@ def create_engine_table() -> tuple[Engine, Table]:
 
     metadata.create_all(engine, checkfirst=True)
     return engine, access_log
-
-# %%
