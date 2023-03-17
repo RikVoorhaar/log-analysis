@@ -1,7 +1,7 @@
 # %%
 import matplotlib.pyplot as plt
 import pandas as pd
-from database_def import create_engine_table
+from log_parsing.database_def import create_engine_table
 import numpy as np
 
 engine, access_log = create_engine_table()

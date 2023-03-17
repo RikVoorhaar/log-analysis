@@ -4,7 +4,7 @@ import numpy as np
 import polars as pl
 from scipy.ndimage import gaussian_filter1d
 
-from database_def import create_engine_table
+from log_parsing.database_def import create_engine_table
 
 engine, tables = create_engine_table()
 access_log = tables["access_log"]

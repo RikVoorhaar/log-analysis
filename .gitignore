@@ -3,3 +3,5 @@ access.log
 /data
 __pycache__
 .vscode
+*.egg-info
+.env

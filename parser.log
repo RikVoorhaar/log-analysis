@@ -1,0 +1,146 @@
+2023-03-17 18:29:16,687 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:29:17,245 | geolocation | INFO
+    Getting country info for 876 addresses.
+2023-03-17 18:29:18,082 | geolocation | INFO
+    Getting country info for 1204 addresses.
+2023-03-17 18:29:18,874 | geolocation | INFO
+    Getting country info for 1003 addresses.
+2023-03-17 18:29:19,610 | geolocation | INFO
+    Getting country info for 1065 addresses.
+2023-03-17 18:29:20,335 | geolocation | INFO
+    Getting country info for 984 addresses.
+2023-03-17 18:29:21,046 | geolocation | INFO
+    Getting country info for 908 addresses.
+2023-03-17 18:29:22,066 | geolocation | INFO
+    Getting country info for 1709 addresses.
+2023-03-17 18:29:22,994 | geolocation | INFO
+    Getting country info for 1097 addresses.
+2023-03-17 18:31:40,320 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:43:29,667 | config | INFO
+    Logger initialized
+2023-03-17 18:43:29,675 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:45:23,764 | <ipython-input-1-360b50d16734> | INFO
+    Logger initialized
+2023-03-17 18:45:50,952 | config | INFO
+    Logger initialized
+2023-03-17 18:45:50,953 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/log_parsing/config.py", line 37, in <module>
+    raise ValueError()
+ValueError
+2023-03-17 18:46:32,907 | config | INFO
+    Logger initialized
+2023-03-17 18:46:32,908 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/scripts/load_log.py", line 6, in <module>
+    from log_parsing.parse_access_log import _main
+  File "/home/rik/git/log-analysis/log_parsing/parse_access_log.py", line 9, in <module>
+    from log_parsing.database_def import TableNames, create_engine_table
+  File "/home/rik/git/log-analysis/log_parsing/database_def.py", line 16, in <module>
+    from log_parsing.config import PROJECT_ROOT
+  File "/home/rik/git/log-analysis/log_parsing/config.py", line 37, in <module>
+    raise ValueError()
+ValueError
+2023-03-17 18:47:03,265 | config | INFO
+    Logger initialized
+2023-03-17 18:47:03,277 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:48:01,198 | config | INFO
+    Logger initialized
+2023-03-17 18:48:01,209 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:48:01,209 | parse_access_log | INFO
+    Parsing 0 log files.
+2023-03-17 18:52:36,609 | config | INFO
+    Logger initialized
+2023-03-17 18:52:44,181 | config | INFO
+    Logger initialized
+2023-03-17 18:52:44,193 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-17 18:52:44,193 | parse_access_log | INFO
+    Parsing 8 log files.
+2023-03-17 18:52:44,193 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week0.log
+2023-03-17 18:52:44,743 | parse_access_log | INFO
+    Commited 18143 from access log with date range 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-03-17 18:52:44,823 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-03-17 18:52:44,977 | parse_access_log | INFO
+    Made pages dataframe with shape (1213, 9)
+2023-03-17 18:52:45,174 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:45,175 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week1.log
+2023-03-17 18:52:45,594 | parse_access_log | INFO
+    Commited 11896 from access log with date range 2023-01-15 13:05:10+00:00 to 2023-01-22 12:44:54+00:00
+2023-03-17 18:52:45,678 | geolocation | INFO
+    Getting country info for 965 addresses.
+2023-03-17 18:52:45,800 | parse_access_log | INFO
+    Made pages dataframe with shape (965, 9)
+2023-03-17 18:52:46,006 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:46,006 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week2.log
+2023-03-17 18:52:46,431 | parse_access_log | INFO
+    Commited 13478 from access log with date range 2023-01-22 13:06:07+00:00 to 2023-01-29 13:04:53+00:00
+2023-03-17 18:52:46,492 | geolocation | INFO
+    Getting country info for 1019 addresses.
+2023-03-17 18:52:46,629 | parse_access_log | INFO
+    Made pages dataframe with shape (1019, 9)
+2023-03-17 18:52:46,811 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:46,811 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week3.log
+2023-03-17 18:52:47,216 | parse_access_log | INFO
+    Commited 13069 from access log with date range 2023-01-29 13:46:14+00:00 to 2023-02-05 13:23:34+00:00
+2023-03-17 18:52:47,283 | geolocation | INFO
+    Getting country info for 914 addresses.
+2023-03-17 18:52:47,410 | parse_access_log | INFO
+    Made pages dataframe with shape (914, 9)
+2023-03-17 18:52:47,603 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:47,603 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week4.log
+2023-03-17 18:52:48,019 | parse_access_log | INFO
+    Commited 13997 from access log with date range 2023-02-05 13:46:51+00:00 to 2023-02-12 13:46:04+00:00
+2023-03-17 18:52:48,074 | geolocation | INFO
+    Getting country info for 1081 addresses.
+2023-03-17 18:52:48,238 | parse_access_log | INFO
+    Made pages dataframe with shape (1081, 9)
+2023-03-17 18:52:48,410 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:48,410 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week5.log
+2023-03-17 18:52:48,814 | parse_access_log | INFO
+    Commited 13465 from access log with date range 2023-02-12 14:06:50+00:00 to 2023-02-19 14:05:48+00:00
+2023-03-17 18:52:48,881 | geolocation | INFO
+    Getting country info for 1132 addresses.
+2023-03-17 18:52:49,016 | parse_access_log | INFO
+    Made pages dataframe with shape (1132, 9)
+2023-03-17 18:52:49,229 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:49,229 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week6.log
+2023-03-17 18:52:49,666 | parse_access_log | INFO
+    Commited 14489 from access log with date range 2023-02-19 14:09:51+00:00 to 2023-02-26 13:53:58+00:00
+2023-03-17 18:52:49,737 | geolocation | INFO
+    Getting country info for 1100 addresses.
+2023-03-17 18:52:49,911 | parse_access_log | INFO
+    Made pages dataframe with shape (1100, 9)
+2023-03-17 18:52:50,080 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-03-17 18:52:50,080 | parse_access_log | INFO
+    Parsing log file with name /home/rik/git/log-analysis/logs/week7.log
+2023-03-17 18:52:50,792 | parse_access_log | INFO
+    Commited 24259 from access log with date range 2023-02-26 14:47:54+00:00 to 2023-03-05 13:07:27+00:00
+2023-03-17 18:52:50,873 | geolocation | INFO
+    Getting country info for 1729 addresses.
+2023-03-17 18:52:51,080 | parse_access_log | INFO
+    Made pages dataframe with shape (1729, 9)
+2023-03-17 18:52:51,357 | parse_access_log | INFO
+    Inserted pages dataframe into database.

@@ -1,17 +1,19 @@
 # %%
-from pathlib import Path
 from enum import Enum
+
 from sqlalchemy import (
     Column,
     DateTime,
+    Engine,
     Float,
     Integer,
     MetaData,
     String,
     Table,
     create_engine,
-    Engine,
 )
+
+from log_parsing.config import PROJECT_ROOT
 
 
 class TableNames(Enum):
@@ -19,11 +21,12 @@ class TableNames(Enum):
     PAGES_LOG = "pages_log"
 
 
-SQLITE_DB_PATH = Path("data") / "access.db"
+SQLITE_DB_PATH = PROJECT_ROOT / "data" / "access.db"
 
 
 def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
-    engine = create_engine("sqlite:///" + str(SQLITE_DB_PATH))
+    engine_url = "sqlite:///" + str(SQLITE_DB_PATH)
+    engine = create_engine(engine_url)
 
     metadata = MetaData()
     access_log = Table(
@@ -47,13 +50,14 @@ def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
         TableNames.PAGES_LOG.value,
         metadata,
         Column("request_id", String, primary_key=True),
-        Column("http_x_forwarded_for", String),
+        Column("addr", String),
         Column("time", DateTime),
         Column("connection", Integer),
         Column("hour", DateTime),
         Column("day", DateTime),
         Column("weekday", Integer),
         Column("page_name", String),
+        Column("country", String)
     )
 
     metadata.create_all(engine, checkfirst=True)
