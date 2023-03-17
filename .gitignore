@@ -2,3 +2,4 @@
 access.log
 /data
 __pycache__
+.vscode
