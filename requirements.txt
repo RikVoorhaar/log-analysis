@@ -16,3 +16,5 @@ polars
 connectorx
 pyarrow
 scipy
+python-dotenv
+geoip2

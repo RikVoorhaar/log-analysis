@@ -7,7 +7,7 @@ import numpy as np
 engine, access_log = create_engine_table()
 with engine.connect() as conn:
     stmt = access_log.select()
-    %time df = pd.read_sql(stmt, conn)
+    df = pd.read_sql(stmt, conn)
 
 # %%
 %%time

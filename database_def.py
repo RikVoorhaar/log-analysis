@@ -1,4 +1,6 @@
 # %%
+from pathlib import Path
+from enum import Enum
 from sqlalchemy import (
     Column,
     DateTime,
@@ -12,12 +14,20 @@ from sqlalchemy import (
 )
 
 
-def create_engine_table() -> tuple[Engine, Table]:
-    engine = create_engine("sqlite:///access.db")
+class TableNames(Enum):
+    ACCESS_LOG = "access_log"
+    PAGES_LOG = "pages_log"
+
+
+SQLITE_DB_PATH = Path("data") / "access.db"
+
+
+def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
+    engine = create_engine("sqlite:///" + str(SQLITE_DB_PATH))
 
     metadata = MetaData()
     access_log = Table(
-        "access_log",
+        TableNames.ACCESS_LOG.value,
         metadata,
         Column("request_id", String, primary_key=True),
         Column("connection", Integer),
@@ -33,5 +43,22 @@ def create_engine_table() -> tuple[Engine, Table]:
         Column("time_iso8601", DateTime),
     )
 
+    pages_log = Table(
+        TableNames.PAGES_LOG.value,
+        metadata,
+        Column("request_id", String, primary_key=True),
+        Column("http_x_forwarded_for", String),
+        Column("time", DateTime),
+        Column("connection", Integer),
+        Column("hour", DateTime),
+        Column("day", DateTime),
+        Column("weekday", Integer),
+        Column("page_name", String),
+    )
+
     metadata.create_all(engine, checkfirst=True)
-    return engine, access_log
+    tables = {
+        TableNames.ACCESS_LOG: access_log,
+        TableNames.PAGES_LOG: pages_log,
+    }
+    return engine, tables

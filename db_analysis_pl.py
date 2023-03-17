@@ -6,7 +6,8 @@ from scipy.ndimage import gaussian_filter1d
 
 from database_def import create_engine_table
 
-engine, access_log = create_engine_table()
+engine, tables = create_engine_table()
+access_log = tables["access_log"]
 db_url = str(engine.url).replace("///", "//")
 df = pl.read_sql(f"SELECT * from {access_log.name}", db_url)
 remap = {"time_iso8601": "time"}
@@ -90,9 +91,7 @@ single_page_df = pages_df.filter(pl.col("page_name") == page)
 
 
 # single_page_df["time"].dt.hour()+single_page_df["time"].dt.hour()
-def get_hour_minute_count(
-    df: pl.DataFrame, time_res_minutes: int
-) -> pl.DataFrame:
+def get_hour_minute_count(df: pl.DataFrame, time_res_minutes: int) -> pl.DataFrame:
     h_m = df.select(
         (
             (

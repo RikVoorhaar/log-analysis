@@ -1,2 +1,4 @@
+/logs
 access.log
-access.db
+/data
+__pycache__
