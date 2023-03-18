@@ -13,7 +13,7 @@ from sqlalchemy import (
     create_engine,
 )
 
-from log_parsing.config import PROJECT_ROOT
+from log_parsing.config import DATA_PATH
 
 
 class TableNames(Enum):
@@ -21,7 +21,7 @@ class TableNames(Enum):
     PAGES_LOG = "pages_log"
 
 
-SQLITE_DB_PATH = PROJECT_ROOT / "data" / "access.db"
+SQLITE_DB_PATH = DATA_PATH / "access.db"
 
 
 def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
@@ -57,7 +57,10 @@ def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
         Column("day", DateTime),
         Column("weekday", Integer),
         Column("page_name", String),
-        Column("country", String)
+        Column("timezone", String),
+        Column("country", String),
+        Column("continent", String),
+        Column("local_time", DateTime),
     )
 
     metadata.create_all(engine, checkfirst=True)

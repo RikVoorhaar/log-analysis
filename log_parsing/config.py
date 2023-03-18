@@ -3,6 +3,8 @@ from pathlib import Path
 import sys
 
 PROJECT_ROOT = Path(__file__).parent.parent
+DATA_PATH = PROJECT_ROOT / "data"
+LOGS_PATH = PROJECT_ROOT / "logs"
 LOGGER_NAME = "parser_logger"
 
 

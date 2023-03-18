@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 from log_parsing.database_def import TableNames, create_engine_table
 from log_parsing.config import PROJECT_ROOT, logger
-from log_parsing.geolocation import get_country_info
+from log_parsing.geolocation import add_country_info
 
 
 def parse_data(data: dict, columns) -> dict:
@@ -71,9 +71,9 @@ def make_pages_df(df: pl.DataFrame):
                 .fill_null("home")
                 .alias("page_name")
             ),
-            pl.col("addr").map(get_country_info).alias("country"),
         ]
     )
+    df_pages = add_country_info(df_pages)
     df_pages = df_pages.drop("request_uri")
     return df_pages
 
