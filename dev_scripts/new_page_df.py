@@ -104,6 +104,7 @@ filtered_dfs = [
     FilteredDataFrame(df),
     FilteredDataFrame(df, continent="Europe"),
     FilteredDataFrame(df, country="Denmark"),
+    FilteredDataFrame(df, page_name="home"),
 ]
 filtered_dfs
 
@@ -241,32 +242,80 @@ make_line_plot(
     "date",
     "relative_counts",
 )
-# plt.plot(
-#     rolling_sum["time"], gaussian_filter1d(rolling_sum["counts"].cast(pl.Float32), 4)
-# )
-# ax = plt.gca()
-# ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
-# plt.show()
-# %%
-hour_dfs = [
-    compute_date_hour_count(df.dataframe, frequency="6h") for df in filtered_dfs
-]
-[df.dataframe["time"].max() for df in filtered_dfs]
-hour_dfs[-1]
-
-frequency = "6h"
-df = filtered_dfs[-1].dataframe
-date_hour = df["time"].dt.truncate(frequency)
-date_hour_count = date_hour.value_counts().sort(by="time")
-min_date = date_hour_count["time"].min()
-max_date = date_hour_count["time"].max()
-date_range = pl.date_range(min_date, max_date, interval=frequency, time_unit="ns")
-date_range_df = pl.DataFrame({"time": date_range})
-date_hour_count.join(date_range_df, on="time", how="outer").fill_null(0)
 # %%
 
-weekday_df = df["weekday"].value_counts().sort(by="weekday")
-days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-fig = px.bar(x=days_of_week, y=weekday_df["counts"], labels={"x": "", "y": "fraction"})
 
-fig
+def make_weekday_plot_data(df: pl.DataFrame) -> pl.DataFrame:
+    weekday_df = df["weekday"].value_counts().sort(by="weekday")
+    days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    weekday_df = weekday_df.with_columns(
+        pl.Series(days_of_week).alias("weekday"),
+        (pl.col("counts") / pl.col("counts").sum()).alias("Fraction"),
+    )
+    return weekday_df
+
+
+def make_weekday_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+    weekday_dfs = [make_weekday_plot_data(df.dataframe) for df in filtered_dfs]
+    x_label = "weekday"
+    y_label = "Fraction"
+    fig = go.Figure()
+    for filter, wk_df in zip(filtered_dfs, weekday_dfs):
+        fig.add_trace(
+            go.Bar(
+                x=wk_df[x_label],
+                y=wk_df[y_label],
+                name=filter.plot_label,
+                hovertemplate=r"%{y:.4f}<extra></extra>",
+            )
+        )
+    fig.update_layout(legend_title_text="Filter")
+    return fig
+
+
+make_weekday_plot(filtered_dfs)
+# %%
+
+df = filtered_dfs[0].dataframe
+
+IGNORED_PAGES = ["test", "users", "images"]
+ignore_pages_regex = r"^(" + "|".join(IGNORED_PAGES) + ")$"
+
+
+def make_page_popularity_plot_data(df: pl.DataFrame) -> pl.DataFrame:
+    df_bar = (
+        df["page_name"]
+        .value_counts()
+        .sort(by="page_name")
+        .filter(pl.col("page_name").str.contains(ignore_pages_regex).is_not())
+        .with_columns((pl.col("counts") / pl.col("counts").sum()))
+    )
+    x_label = "Page name"
+    y_label = "Frequency"
+    df_bar.columns = [x_label, y_label]
+    return df_bar
+
+
+def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+    height_per_row = 60
+    x_label = "Page name"
+    y_label = "Frequency"
+    fig = go.Figure()
+    all_labels: set[str] = set()
+    for filter in filtered_dfs:
+        df_bar = make_page_popularity_plot_data(filter.dataframe)
+        all_labels.update(df_bar[x_label])
+        fig.add_trace(
+            go.Bar(
+                y=df_bar[x_label],
+                x=df_bar[y_label],
+                orientation="h",
+                name=filter.plot_label,
+            )
+        )
+    fig.update_xaxes(type="log")
+    fig.update_layout(height=len(all_labels)*height_per_row, legend_title_text="Filter")
+    return fig
+
+
+make_page_popularity_plot(filtered_dfs)
