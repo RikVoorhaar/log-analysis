@@ -678,3 +678,19 @@ sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) disk I/O error
     Logger initialized
 2023-03-18 18:37:19,782 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-03-19 10:24:45,339 | config | INFO
+    Logger initialized
+2023-03-19 10:24:45,360 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-19 14:30:08,743 | config | INFO
+    Logger initialized
+2023-03-19 14:30:08,756 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-19 14:59:34,306 | config | INFO
+    Logger initialized
+2023-03-19 14:59:34,318 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-19 14:59:40,886 | config | INFO
+    Logger initialized
+2023-03-19 14:59:40,898 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
