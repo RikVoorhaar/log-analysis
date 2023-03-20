@@ -59,6 +59,7 @@ def create_engine_table() -> tuple[Engine, dict[TableNames, Table]]:
         Column("page_name", String),
         Column("timezone", String),
         Column("country", String),
+        Column("country_iso", String),
         Column("continent", String),
         Column("local_time", DateTime),
     )

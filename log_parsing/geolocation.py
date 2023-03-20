@@ -85,6 +85,21 @@ def map_country_name(addr: pl.Series) -> pl.Series:
     return res
 
 
+def map_country_iso_code(addr: pl.Series) -> pl.Series:
+    logger.info(f"Getting country info for {len(addr)} addresses.")
+    with get_geolite_reader(GeoliteDatabaseTypes.COUNTRY) as reader:
+
+        def get_country(addr: str) -> str:
+            response = reader.country(addr)
+            name = response.country.iso_code
+            if name is None:
+                return "unknown"
+            return name
+
+        res = addr.apply(get_country).alias("country")
+    return res
+
+
 def map_timezone(addr: pl.Series) -> pl.Series:
     with get_geolite_reader(GeoliteDatabaseTypes.CITY) as reader:
 
@@ -130,6 +145,7 @@ def add_country_info(df: pl.DataFrame) -> pl.DataFrame:
     df = df.with_columns(
         pl.col("addr").map(map_timezone).alias("timezone"),
         pl.col("addr").map(map_country_name).alias("country"),
+        pl.col("addr").map(map_country_iso_code).alias("country_iso"),
         pl.col("addr").map(map_continent).alias("continent"),
     )
     df_tz = df.groupby("timezone").apply(get_local_time).sort(by=pl.col("request_id"))

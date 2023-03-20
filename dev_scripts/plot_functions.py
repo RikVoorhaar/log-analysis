@@ -311,11 +311,122 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
                 x=df_bar[y_label],
                 orientation="h",
                 name=filter.plot_label,
+                hovertemplate=r"%{x:.4f}<extra></extra>",
             )
         )
-    fig.update_xaxes(type="log")
-    fig.update_layout(height=len(all_labels)*height_per_row, legend_title_text="Filter")
+
+    fig.update_xaxes(type="log", automargin=True)
+    fig.update_yaxes(automargin=True)
+    fig.update_layout(
+        height=len(all_labels) * height_per_row, legend_title_text="Filter"
+    )
     return fig
 
 
 make_page_popularity_plot(filtered_dfs)
+
+# %%
+"""
+Now let's think about country data. Continents are obviously easy, but countries are
+tougher. I map would of course be cool, but how to represent that data?
+
+Let's see first if we can make a country map.
+
+For this we are going to need three leter iso codes as feature. Unfortunately we only
+have 2-letter iso. Let's if that also works or if we need to translate 2 letter to 3
+letter.
+"""
+import country_converter as coco
+
+plot_df = (
+    df["country_iso"]
+    .value_counts()
+    .with_columns(pl.col("counts").cast(pl.Float32))
+    .to_pandas()
+)
+cc = coco.CountryConverter()
+
+plot_df["country_iso"] = cc.pandas_convert(series=plot_df["country_iso"], to="ISO3")
+px.choropleth(plot_df, locations="country_iso", color="counts")
+
+# %%
+"""
+So this is not that interesting. We have to compare it to the 'all' category, or to 
+population or something. Or use 'all' to build a bayesian model for how much we should expect...
+
+I think here it may just make sense to strictly allow the comparison of two filters only. 
+So for that we need extra functionality. Let's shelf it for now, and isntead 
+compare continents.
+
+What we _could_ do is list the top 10 most popular countries for example. We can then 
+build in a slider for the user to select the number of countries in the plot. 
+
+How do we decide the top 10? We can put everything into one big dataframe and then 
+sort by the max of the rows and just take the top N; that's relatively intuitive and 
+simple to implement
+"""
+# %%
+
+def make_country_plot(filtered_df: list[FilteredDataFrame]) -> go.Figure:
+    plot_labels = [fdf.plot_label for fdf in filtered_dfs]
+    x_label = "Country"
+    val_counts = [
+        fdf.dataframe["country"]
+        .alias(x_label)
+        .value_counts()
+        .sort(by=x_label)
+        .with_columns(pl.col("counts").cast(pl.Float32) / pl.col("counts").sum())
+        .rename({"counts": fdf.plot_label})
+        for fdf in filtered_dfs
+    ]
+    joined = val_counts[0]
+    for val_df in val_counts[1:]:
+        joined = joined.join(val_df, on=x_label, how="outer")
+    counts_columns = [col for col in joined.columns if col != x_label]
+    joined = (
+        joined.fill_null(0)
+        .with_columns(pl.max(counts_columns).alias("_counts_max"))
+        .sort(by="_counts_max", descending=True)
+    ).drop("_counts_max")
+    top10 = joined[:10]
+    top10
+
+    fig = px.bar(
+        top10.to_pandas(), y="Country", x=plot_labels, barmode="group", orientation="h"
+    )
+    height_per_row = 60
+    fig.update_layout(height=len(top10) * height_per_row, legend_title_text="Filter")
+    return fig
+
+make_country_plot(filtered_dfs)
+
+
+# %%
+def make_continent_plot_data(df: pl.DataFrame) -> pl.DataFrame:
+    plot_df = df["continent"].value_counts().sort(by="continent")
+    plot_df = plot_df.with_columns(
+        (pl.col("counts") / pl.col("counts").sum()).alias("Fraction"),
+    )
+    return plot_df
+
+
+def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+    plot_df_list = [make_continent_plot_data(df.dataframe) for df in filtered_dfs]
+    x_label = "continent"
+    y_label = "Fraction"
+    fig = go.Figure()
+    for filter, wk_df in zip(filtered_dfs, plot_df_list):
+        fig.add_trace(
+            go.Bar(
+                x=wk_df[y_label],
+                y=wk_df[x_label],
+                name=filter.plot_label,
+                hovertemplate=r"%{x:.4f}<extra></extra>",
+                orientation="h",
+            )
+        )
+    fig.update_layout(legend_title_text="Filter")
+    return fig
+
+
+make_continent_plot(filtered_dfs)
