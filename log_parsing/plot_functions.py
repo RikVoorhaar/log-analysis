@@ -3,21 +3,18 @@ import datetime
 from enum import Enum
 from typing import Callable
 
-import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import polars as pl
-import pandas as pd
 from scipy.ndimage import gaussian_filter1d
 
 from log_parsing.database_def import TableNames
 from log_parsing.parse_access_log import load_df_from_db
 
-df = load_df_from_db(TableNames.PAGES_LOG)
-# df['timezone'].str.extract(r'(.*?)/.*').value_counts()
-df["continent"].value_counts()
-# %%
+
+IGNORED_PAGES = ["test", "users", "images"]
+IGNORE_PAGES_REGEX = r"^(" + "|".join(IGNORED_PAGES) + ")$"
 
 
 class FilteredDataFrame:
@@ -44,8 +41,9 @@ class FilteredDataFrame:
             selectors.append(pl.col("time").is_between(self.date_start, self.date_end))
         elif self.date_start is not None and self.date_end is None:
             selectors.append(pl.col("time") >= self.date_start)
-        elif date_start is None and date_end is not None:
+        elif self.date_start is None and self.date_end is not None:
             selectors.append(pl.col("time") <= self.date_end)
+        
         if self.country is not None:
             selectors.append(pl.col("country") == self.country)
         if self.continent is not None:
@@ -98,24 +96,14 @@ class FilteredDataFrame:
         return repr_str
 
 
-date_start = df["time"][0]
-date_end = df["time"][-1]
-filtered_dfs = [
-    FilteredDataFrame(df),
-    FilteredDataFrame(df, continent="Europe"),
-    FilteredDataFrame(df, country="Denmark"),
-    FilteredDataFrame(df, page_name="home"),
-]
-filtered_dfs
-
-
-# %%
 def compute_date_hour_count(df: pl.DataFrame, frequency="1h") -> pl.DataFrame:
     date_hour = df["time"].dt.truncate(frequency)
     date_hour_count = date_hour.value_counts().sort(by="time")
     min_date = date_hour_count["time"].min()
     max_date = date_hour_count["time"].max()
-    date_range = pl.date_range(min_date, max_date, interval=frequency, time_unit="ns")
+    date_range = pl.date_range(
+        min_date, max_date, interval=frequency, time_unit="ns"
+    )  # type: ignore
     date_range_df = pl.DataFrame({"time": date_range})
     date_hour_count = date_hour_count.join(
         date_range_df, on="time", how="outer"
@@ -211,16 +199,6 @@ def make_line_plot(
     return fig
 
 
-make_line_plot(
-    filtered_dfs,
-    make_hour_minute_plot_data,
-    "Time of day",
-    "relative frequency",
-    x_axis_kwargs={"tickformat": "%H:%M"},
-)
-
-
-# %%
 def get_rolling_mean_1w(df: pl.DataFrame) -> pl.DataFrame:
     x_label = "date"
     y_label = "relative_counts"
@@ -234,15 +212,6 @@ def get_rolling_mean_1w(df: pl.DataFrame) -> pl.DataFrame:
         / len(df),
     )
     return rolling_sum
-
-
-make_line_plot(
-    filtered_dfs,
-    get_rolling_mean_1w,
-    "date",
-    "relative_counts",
-)
-# %%
 
 
 def make_weekday_plot_data(df: pl.DataFrame) -> pl.DataFrame:
@@ -273,21 +242,12 @@ def make_weekday_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     return fig
 
 
-make_weekday_plot(filtered_dfs)
-# %%
-
-df = filtered_dfs[0].dataframe
-
-IGNORED_PAGES = ["test", "users", "images"]
-ignore_pages_regex = r"^(" + "|".join(IGNORED_PAGES) + ")$"
-
-
 def make_page_popularity_plot_data(df: pl.DataFrame) -> pl.DataFrame:
     df_bar = (
         df["page_name"]
         .value_counts()
         .sort(by="page_name")
-        .filter(pl.col("page_name").str.contains(ignore_pages_regex).is_not())
+        .filter(pl.col("page_name").str.contains(IGNORE_PAGES_REGEX).is_not())
         .with_columns((pl.col("counts") / pl.col("counts").sum()))
     )
     x_label = "Page name"
@@ -323,50 +283,6 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     return fig
 
 
-make_page_popularity_plot(filtered_dfs)
-
-# %%
-"""
-Now let's think about country data. Continents are obviously easy, but countries are
-tougher. I map would of course be cool, but how to represent that data?
-
-Let's see first if we can make a country map.
-
-For this we are going to need three leter iso codes as feature. Unfortunately we only
-have 2-letter iso. Let's if that also works or if we need to translate 2 letter to 3
-letter.
-"""
-import country_converter as coco
-
-plot_df = (
-    df["country_iso"]
-    .value_counts()
-    .with_columns(pl.col("counts").cast(pl.Float32))
-    .to_pandas()
-)
-cc = coco.CountryConverter()
-
-plot_df["country_iso"] = cc.pandas_convert(series=plot_df["country_iso"], to="ISO3")
-px.choropleth(plot_df, locations="country_iso", color="counts")
-
-# %%
-"""
-So this is not that interesting. We have to compare it to the 'all' category, or to 
-population or something. Or use 'all' to build a bayesian model for how much we should expect...
-
-I think here it may just make sense to strictly allow the comparison of two filters only. 
-So for that we need extra functionality. Let's shelf it for now, and isntead 
-compare continents.
-
-What we _could_ do is list the top 10 most popular countries for example. We can then 
-build in a slider for the user to select the number of countries in the plot. 
-
-How do we decide the top 10? We can put everything into one big dataframe and then 
-sort by the max of the rows and just take the top N; that's relatively intuitive and 
-simple to implement
-"""
-# %%
-
 def make_country_plot(filtered_df: list[FilteredDataFrame]) -> go.Figure:
     plot_labels = [fdf.plot_label for fdf in filtered_dfs]
     x_label = "Country"
@@ -398,10 +314,7 @@ def make_country_plot(filtered_df: list[FilteredDataFrame]) -> go.Figure:
     fig.update_layout(height=len(top10) * height_per_row, legend_title_text="Filter")
     return fig
 
-make_country_plot(filtered_dfs)
 
-
-# %%
 def make_continent_plot_data(df: pl.DataFrame) -> pl.DataFrame:
     plot_df = df["continent"].value_counts().sort(by="continent")
     plot_df = plot_df.with_columns(
@@ -429,4 +342,34 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     return fig
 
 
-make_continent_plot(filtered_dfs)
+# %%
+
+
+if __name__ == "__main__":
+    df = load_df_from_db(TableNames.PAGES_LOG)
+    date_start = df["time"][0]
+    date_end = df["time"][-1]
+    filtered_dfs = [
+        FilteredDataFrame(df),
+        FilteredDataFrame(df, continent="Europe"),
+        FilteredDataFrame(df, country="Denmark"),
+        FilteredDataFrame(df, page_name="home"),
+    ]
+
+    make_line_plot(
+        filtered_dfs,
+        make_hour_minute_plot_data,
+        "Time of day",
+        "relative frequency",
+        x_axis_kwargs={"tickformat": "%H:%M"},
+    ).show()
+    make_line_plot(
+        filtered_dfs,
+        get_rolling_mean_1w,
+        "date",
+        "relative_counts",
+    ).show()
+    make_weekday_plot(filtered_dfs).show()
+    make_page_popularity_plot(filtered_dfs).show()
+    make_country_plot(filtered_dfs).show()
+    make_continent_plot(filtered_dfs).show()

@@ -1,0 +1,16 @@
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .filter-row .form-group {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .filter-row .form-group:last-child {
+    margin-right: 0;
+  }
+  
