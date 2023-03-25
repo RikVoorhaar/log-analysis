@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-    entry: './src/filters.js',
+    entry: './src/filters.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'assets')
@@ -16,8 +16,18 @@ module.exports = {
                 test: /\.js$/,
                 use: ['source-map-loader'],
                 enforce: 'pre'
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             }
+
         ]
     }, 
-    mode: 'development'
+    mode: 'development',
+    resolve : {
+        extensions: ['.tsx', '.ts', '.js']
+    }
+
 }

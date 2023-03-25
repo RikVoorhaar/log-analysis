@@ -5,8 +5,42 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import $ from 'jquery'
 import './filter.css'
 
+init()
+
+class MultiSelect {
+  private values: string[];
+  private label: string;
+
+  constructor(values: string[], label: string) {
+    this.values = values;
+    this.label = label;
+
+    this.render();
+  }
+
+  private render() {
+    const container = document.createElement('div');
+    container.classList.add('form-group')
+    container.innerHTML = `
+      <label>${this.label}</label>
+      <select multiple id=${this.label}>
+        ${this.values.map(value => `<option>${value}</option>`).join('')}
+      </select>
+    `;
+    document.body.appendChild(container);
+  }
+
+  getSelectedValues(): string[] {
+    const selectEl = document.querySelector('select') as HTMLSelectElement;
+    return Array.from(selectEl.selectedOptions).map(option => option.value);
+  }
+}
+
+
 class FilterRow {
-  constructor(data) {
+  public row: HTMLDivElement
+
+  constructor(data: FilterOptionsInterface) {
     this.row = document.createElement('div')
     this.row.classList.add('filter-row')
 
@@ -150,17 +184,27 @@ class FilterRow {
     this.row.appendChild(countryGroup)
     this.row.appendChild(continentGroup)
     this.row.appendChild(pageNameGroup)
-    $('select').selectpicker()
   }
 
   sendData() {
     // Send data to Flask app
+    const startDateInput = this.row.querySelector<HTMLInputElement>('#start-date');
+    const endDateInput = this.row.querySelector<HTMLInputElement>('#end-date');
+    const countrySelect = this.row.querySelector<HTMLSelectElement>('#country');
+    const continentSelect = this.row.querySelector<HTMLSelectElement>('#continent');
+    const pageNameSelect = this.row.querySelector<HTMLSelectElement>('#page-name');
+
+    if (!startDateInput || !endDateInput || !countrySelect || !continentSelect || !pageNameSelect) {
+      console.error('One or more inputs could not be found.');
+      return;
+    }
+
     const data = {
-      startDate: this.row.querySelector('#start-date').value,
-      endDate: this.row.querySelector('#end-date').value,
-      country: this.row.querySelector('#country').value,
-      continent: this.row.querySelector('#continent').value,
-      pageName: this.row.querySelector('#page-name').value
+      startDate: startDateInput.value,
+      endDate: endDateInput.value,
+      country: countrySelect.value,
+      continent: continentSelect.value,
+      pageName: pageNameSelect.value
     }
 
     fetch('/my-flask-route', {
@@ -177,23 +221,39 @@ class FilterRow {
       })
       .catch(error => console.error(error))
   }
+
 }
 
-const filterRowsContainer = document.querySelector('#filter-rows')
-const addFilterButton = document.querySelector('#add-filter')
+interface FilterOptionsInterface {
+  minDate: string;
+  maxDate: string;
+  countries: string[];
+  continents: string[];
+  pageNames: string[];
+}
 
-const filterRows = []
+function init(): void {
+  let filterOptions: FilterOptionsInterface
+  fetch('/filter-options').then(response => response.json()).then(data => {
+    filterOptions = data
+  }).catch(error => console.error(error))
 
-let filterData
-fetch('/filter-options').then(response => response.json()).then(data => {
-  filterData = data
-}).catch(error => console.error(error))
+  const filterRowsContainer = document.querySelector<HTMLDivElement>('#filter-rows')
+  const addFilterButton = document.querySelector<HTMLButtonElement>('#add-filter')
+  if (!filterRowsContainer || !addFilterButton) {
+    console.error('Could not find filter rows container or add filter button.')
+    return
+  }
 
-addFilterButton.addEventListener('click', () => {
-  const filterRow = new FilterRow(filterData)
-  filterRows.push(filterRow)
-  filterRowsContainer.appendChild(filterRow.row)
-})
-$(function () {
-  $('select').selectpicker();
-});
+  const filterRows = []
+
+  addFilterButton.addEventListener('click', () => {
+    const filterRow = new FilterRow(filterOptions)
+    filterRows.push(filterRow)
+    filterRowsContainer.appendChild(filterRow.row)
+    $('select').selectpicker()
+  })
+  $(function () {
+    $('select').selectpicker();
+  });
+}
