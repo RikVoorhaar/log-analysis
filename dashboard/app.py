@@ -78,8 +78,10 @@ def return_filter_json():
     return jsonify(filter_json)
 
 
-@app.server.route("/my-flask-route", methods=["GET", "POST"])
+@app.server.route("/filter-data", methods=["GET", "POST"])
 def test_route():
+    request_json = request.get_json()
+    print(request_json)
     return jsonify({"success": True})
 
 

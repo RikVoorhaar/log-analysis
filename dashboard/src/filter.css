@@ -1,12 +1,12 @@
 .filter-row {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 10px;
+    align-items: left;
+    margin-bottom: 0px;
   }
   
-  .filter-row .form-group {
-    flex: 1;
+  .filter-row .form-group,
+  .filter-row .input-group {
     margin-right: 10px;
   }
   
@@ -14,3 +14,12 @@
     margin-right: 0;
   }
   
+  .filter-row .input-daterange {
+    width: 240px;
+    height: 24px !important;
+  }
+  
+  .filter-row button {
+    padding: 0px;
+    margin-right: 10px;
+  }

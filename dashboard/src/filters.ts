@@ -1,225 +1,181 @@
 import 'bootstrap'
+import 'bootstrap-datepicker'
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css'
 import 'bootstrap-select'
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { EventEmitter } from 'events'
 import $ from 'jquery'
 import './filter.css'
 
-init()
 
-class MultiSelect {
+abstract class FilterElement {
+  public container: HTMLDivElement;
+  protected eventEmitter: EventEmitter;
+
+  constructor() {
+    this.container = document.createElement('div');
+    this.eventEmitter = new EventEmitter();
+  }
+
+  abstract render(): void;
+
+  abstract getValues(): string[];
+
+  public on(event: string, listener: (...args: any[]) => void) {
+    this.eventEmitter.on(event, listener);
+  }
+}
+
+
+class MultiSelect extends FilterElement {
   private values: string[];
   private label: string;
 
   constructor(values: string[], label: string) {
+    super()
     this.values = values;
     this.label = label;
 
-    this.render();
-  }
-
-  private render() {
-    const container = document.createElement('div');
-    container.classList.add('form-group')
-    container.innerHTML = `
-      <label>${this.label}</label>
-      <select multiple id=${this.label}>
+    this.container.classList.add('form-group')
+    this.container.innerHTML = `
+      <select multiple id=${this.label} data-live-search="true">
         ${this.values.map(value => `<option>${value}</option>`).join('')}
       </select>
     `;
-    document.body.appendChild(container);
+
+    this.container.addEventListener('change', () => {
+      this.eventEmitter.emit('change', undefined)
+    })
   }
 
-  getSelectedValues(): string[] {
-    const selectEl = document.querySelector('select') as HTMLSelectElement;
+  public render(): void {
+    $(this.container).find('select').selectpicker()
+  }
+
+  getValues(): string[] {
+    const selectEl = this.container.querySelector('select') as HTMLSelectElement;
     return Array.from(selectEl.selectedOptions).map(option => option.value);
   }
+}
+
+class DatePicker extends FilterElement {
+  private min_date: string;
+  private max_date: string;
+
+  constructor(min_date: string, max_date: string) {
+    super()
+    this.min_date = min_date;
+    this.max_date = max_date;
+
+    this.container.classList.add('input-daterange')
+    this.container.classList.add('input-group')
+    this.container.setAttribute('id', 'datepicker')
+
+    this.container.innerHTML = `
+      <div class="input-daterange input-group" id="datepicker">
+        <input type="text" class="input-sm form-control" name="start" />
+        <span class="input-group-addon">to</span>
+        <input type="text" class="input-sm form-control" name="end" />
+      </div>
+    `
+
+    const inputs = Array.from(this.container.querySelectorAll('input'));
+
+    inputs.forEach(input => {
+      input.addEventListener('change', () => {
+        this.eventEmitter.emit('change', undefined);
+      });
+    });
+  }
+
+  public render(): void {
+    $(this.container).datepicker({
+      format: 'yyyy-mm-dd',
+      startDate: this.min_date,
+      endDate: this.max_date,
+      startView: 1,
+      maxViewMode: 3,
+      immediateUpdates: true,
+      autoclose: true,
+      clearBtn: true,
+    })
+    $(this.container).datepicker('update', [this.min_date, this.max_date])
+  }
+
+  getValues(): string[] {
+    const inputs = Array.from(this.container.querySelectorAll('input'));
+    return inputs.map(input => input.value);
+  }
+
 }
 
 
 class FilterRow {
   public row: HTMLDivElement
+  private filters: Record<string, FilterElement>;
+  private eventEmitter: EventEmitter;
+  private deleteButton: HTMLButtonElement;
 
   constructor(data: FilterOptionsInterface) {
     this.row = document.createElement('div')
     this.row.classList.add('filter-row')
 
-    // Create DOM elements for each form group
-    const startDateLabel = document.createElement('label')
-    startDateLabel.setAttribute('for', 'start-date')
-    startDateLabel.textContent = 'Start Date:'
+    this.filters = {
+      'date-range': new DatePicker(data.minDate, data.maxDate),
+      'countries': new MultiSelect(data.countries, 'Country'),
+      'continents': new MultiSelect(data.continents, 'Continent'),
+      'page-names': new MultiSelect(data.pageNames, 'Page Name')
+    }
 
-    const startDateInput = document.createElement('input')
-    startDateInput.setAttribute('type', 'date')
-    startDateInput.setAttribute('id', 'start-date')
-    startDateInput.setAttribute('min', data.minDate)
-    startDateInput.setAttribute('max', data.maxDate)
-    startDateInput.setAttribute('value', data.minDate)
-
-    const startDateGroup = document.createElement('div')
-    startDateGroup.classList.add('form-group')
-    startDateGroup.appendChild(startDateLabel)
-    startDateGroup.appendChild(startDateInput)
-
-    const endDateLabel = document.createElement('label')
-    endDateLabel.setAttribute('for', 'end-date')
-    endDateLabel.textContent = 'End Date:'
-
-    const endDateInput = document.createElement('input')
-    endDateInput.setAttribute('type', 'date')
-    endDateInput.setAttribute('id', 'end-date')
-    endDateInput.setAttribute('min', data.minDate)
-    endDateInput.setAttribute('max', data.maxDate)
-    endDateInput.setAttribute('value', data.maxDate)
-
-    const endDateGroup = document.createElement('div')
-    endDateGroup.classList.add('form-group')
-    endDateGroup.appendChild(endDateLabel)
-    endDateGroup.appendChild(endDateInput)
-
-    const countryLabel = document.createElement('label')
-    countryLabel.setAttribute('for', 'country')
-    countryLabel.textContent = 'Country:'
-
-    const countrySelect = document.createElement('select')
-    countrySelect.setAttribute('id', 'country')
-    countrySelect.classList.add('selectpicker')
-    countrySelect.setAttribute('multiple', 'multiple')
-
-    const countryOptions = data.countries.map(country => {
-      const option = document.createElement('option')
-      option.setAttribute('value', country)
-      option.textContent = country
-      return option
-    })
-
-    const defaultCountryOption = document.createElement('option')
-    defaultCountryOption.setAttribute('value', '')
-    defaultCountryOption.textContent = '<All countries>'
-    countrySelect.appendChild(defaultCountryOption)
-    countryOptions.forEach(option => countrySelect.appendChild(option))
-
-    const countryGroup = document.createElement('div')
-    countryGroup.classList.add('form-group')
-    countryGroup.appendChild(countryLabel)
-    countryGroup.appendChild(countrySelect)
-
-    // const continentDropdown = document.createElement('div')
-    // continentDropdown.setAttribute('class', 'dropdown')
-
-    const continentLabel = document.createElement('button')
-    continentLabel.setAttribute('class', 'btn btn-default dropdown-toggle')
-    continentLabel.setAttribute('type', 'button')
-    continentLabel.setAttribute('data-toggle', 'dropdown')
-    continentLabel.setAttribute('id', 'continentDropDown')
-    continentLabel.setAttribute('aria-haspopup', 'true')
-    continentLabel.textContent = 'Continent'
-    // continentDropdown.appendChild(continentLabel)
-
-    const continentSelect = document.createElement('ul')
-    continentSelect.setAttribute('class', 'dropdown-menu')
-    continentSelect.setAttribute('aria-labelledby', 'continentDropDown')
-    // continentDropdown.appendChild(continentSelect)
-
-    const continentOptions = data.continents.map(continent => {
-      // const option = document.createElement('li')
-      const link = document.createElement('a')
-      link.setAttribute('href', '#')
-      link.classList.add('dropdown-item')
-      // option.appendChild(link)
-      link.textContent = continent
-      return link
-    })
-
-    // const defaultContinentOption = document.createElement('li')
-    // defaultContinentOption.textContent = 'All continents'
-    // continentSelect.appendChild(defaultContinentOption)
-    continentOptions.forEach(option => continentSelect.appendChild(option))
-
-    const continentGroup = document.createElement('div')
-    continentGroup.classList.add('dropdown')
-    continentGroup.appendChild(continentLabel)
-    continentGroup.appendChild(continentSelect)
-
-    //
-    // Page names
-    //
-    const pageNameLabel = document.createElement('label')
-    pageNameLabel.setAttribute('for', 'page-name')
-    pageNameLabel.textContent = 'Page Name:'
-
-    const pageNameSelect = document.createElement('select')
-    pageNameSelect.classList.add('form-select')
-    pageNameSelect.setAttribute('id', 'page-name')
-    pageNameSelect.setAttribute('multiple', '')
+    this.deleteButton = document.createElement('button');
+    this.deleteButton.classList.add('btn', 'btn-primary')
+    this.deleteButton.textContent = 'Delete';
+    this.deleteButton.addEventListener('click', () => {
+      this.delete();
+    });
+    this.row.appendChild(this.deleteButton);
 
 
-    const pageNameOptions = data.pageNames.map(pageName => {
-      const option = document.createElement('option')
-      option.setAttribute('value', pageName)
-      option.textContent = pageName
-      return option
-    })
+    this.eventEmitter = new EventEmitter();
 
-    startDateInput.addEventListener('change', this.sendData.bind(this))
-    endDateInput.addEventListener('change', this.sendData.bind(this))
-    countrySelect.addEventListener('change', this.sendData.bind(this))
-    continentSelect.addEventListener('change', this.sendData.bind(this))
-    pageNameSelect.addEventListener('change', this.sendData.bind(this))
-
-    const defaultPageNameOption = document.createElement('option')
-    defaultPageNameOption.setAttribute('value', '')
-    defaultPageNameOption.textContent = '<All pages>'
-    pageNameSelect.appendChild(defaultPageNameOption)
-    pageNameOptions.forEach(option => pageNameSelect.appendChild(option))
-
-    const pageNameGroup = document.createElement('div')
-    pageNameGroup.classList.add('form-group')
-    pageNameGroup.appendChild(pageNameLabel)
-    pageNameGroup.appendChild(pageNameSelect)
-
-    // Append form groups to the row
-    this.row.appendChild(startDateGroup)
-    this.row.appendChild(endDateGroup)
-    this.row.appendChild(countryGroup)
-    this.row.appendChild(continentGroup)
-    this.row.appendChild(pageNameGroup)
+    for (const key in this.filters) {
+      const filter = this.filters[key];
+      // filter.container.addEventListener('change', this.sendData.bind(this))
+      filter.on(
+        'change', () => {
+          this.eventEmitter.emit('change', undefined)
+        }
+      )
+      this.row.appendChild(filter.container)
+    }
   }
 
-  sendData() {
-    // Send data to Flask app
-    const startDateInput = this.row.querySelector<HTMLInputElement>('#start-date');
-    const endDateInput = this.row.querySelector<HTMLInputElement>('#end-date');
-    const countrySelect = this.row.querySelector<HTMLSelectElement>('#country');
-    const continentSelect = this.row.querySelector<HTMLSelectElement>('#continent');
-    const pageNameSelect = this.row.querySelector<HTMLSelectElement>('#page-name');
-
-    if (!startDateInput || !endDateInput || !countrySelect || !continentSelect || !pageNameSelect) {
-      console.error('One or more inputs could not be found.');
-      return;
+  public getData(): { [key: string]: string[] } {
+    const data: { [key: string]: string[] } = {};
+    for (const key in this.filters) {
+      const filter = this.filters[key];
+      data[key] = filter.getValues();
     }
+    return data
+  }
 
-    const data = {
-      startDate: startDateInput.value,
-      endDate: endDateInput.value,
-      country: countrySelect.value,
-      continent: continentSelect.value,
-      pageName: pageNameSelect.value
+  public on(event: string, listener: (...args: any[]) => void) {
+    this.eventEmitter.on(event, listener);
+  }
+
+
+  public render(): void {
+    for (const key in this.filters) {
+      const filter = this.filters[key];
+      filter.render()
     }
+  }
 
-    fetch('/my-flask-route', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle response
-        console.log(data)
-      })
-      .catch(error => console.error(error))
+  private delete(): void {
+    this.row.remove();
+    // Emit an event to let the FilterContainer know that this FilterRow was deleted
+    this.eventEmitter.emit('delete', this);
   }
 
 }
@@ -232,28 +188,81 @@ interface FilterOptionsInterface {
   pageNames: string[];
 }
 
-function init(): void {
-  let filterOptions: FilterOptionsInterface
-  fetch('/filter-options').then(response => response.json()).then(data => {
-    filterOptions = data
-  }).catch(error => console.error(error))
+class FilterContainer {
+  private filterOptions!: FilterOptionsInterface;
+  private filterRowList!: FilterRow[];
+  private filterRowsContainer!: HTMLDivElement;
 
-  const filterRowsContainer = document.querySelector<HTMLDivElement>('#filter-rows')
-  const addFilterButton = document.querySelector<HTMLButtonElement>('#add-filter')
-  if (!filterRowsContainer || !addFilterButton) {
-    console.error('Could not find filter rows container or add filter button.')
-    return
+  constructor() {
+    const filterRowsContainer = document.querySelector<HTMLDivElement>('#filter-rows')
+    const addFilterButton = document.querySelector<HTMLButtonElement>('#add-filter')
+    if (!filterRowsContainer || !addFilterButton) {
+      console.error('Could not find filter rows container or add filter button.')
+      return
+    }
+
+    this.filterRowsContainer = filterRowsContainer
+
+    this.filterRowList = []
+
+    addFilterButton.disabled = true
+    addFilterButton.addEventListener('click', () => {
+      this.addFilter()
+    })
+
+    fetch('/filter-options').then(response => response.json()).then(data => {
+      this.filterOptions = data
+      this.addFilter()
+      addFilterButton.disabled = false
+    }).catch(error => console.error(error))
   }
 
-  const filterRows = []
+  private addFilter(): void {
+    const filterRow = new FilterRow(this.filterOptions)
+    this.filterRowList.push(filterRow)
+    this.filterRowsContainer.appendChild(filterRow.row)
+    filterRow.render()
+    filterRow.on('change', () => {
+      this.sendData()
+    })
+    filterRow.on('delete', (deletedFilterRow: FilterRow) => {
+      const index = this.filterRowList.indexOf(deletedFilterRow);
+      if (index !== -1) {
+        this.filterRowList.splice(index, 1);
+      }
+      this.sendData()
+    });
+    this.sendData()
+  }
 
-  addFilterButton.addEventListener('click', () => {
-    const filterRow = new FilterRow(filterOptions)
-    filterRows.push(filterRow)
-    filterRowsContainer.appendChild(filterRow.row)
-    $('select').selectpicker()
-  })
-  $(function () {
-    $('select').selectpicker();
-  });
+  public getData(): { [key: string]: string[] }[] {
+    const data: { [key: string]: string[] }[] = [];
+    for (const filterRow of this.filterRowList) {
+      const row_data = filterRow.getData()
+      data.push(row_data)
+    }
+    return data
+  }
+
+  public sendData() {
+    fetch('/filter-data', {
+      method: 'POST',
+      body: JSON.stringify(this.getData()),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle response
+        console.log(data)
+      })
+      .catch(error => console.error(error))
+  }
 }
+
+function init(): void {
+  const filterContainer = new FilterContainer()
+}
+
+init()
