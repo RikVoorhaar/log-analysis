@@ -126,7 +126,7 @@ def _main():
     LOG_PARSED = LOG_PATH / "parsed"
     LOG_PARSED.mkdir(exist_ok=True)
     log_files = list(LOG_PATH.glob("*.log"))
-    log_files.sort()    
+    log_files.sort()
     logger.info(f"Parsing {len(log_files)} log files.")
     for log_file in log_files:
         logger.info(f"Parsing log file with name {log_file}")

@@ -1375,3 +1375,213 @@ KeyboardInterrupt
     Logger initialized
 2023-03-26 13:09:04,000 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-03-27 19:01:53,924 | config | INFO
+    Logger initialized
+2023-03-27 19:01:53,940 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:17:12,561 | config | INFO
+    Logger initialized
+2023-03-27 19:17:12,572 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:17:13,670 | config | INFO
+    Logger initialized
+2023-03-27 19:17:13,682 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:24:14,176 | config | INFO
+    Logger initialized
+2023-03-27 19:24:14,186 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:24:14,265 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/dashboard/app.py", line 11, in <module>
+    from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot
+  File "/home/rik/git/log-analysis/log_parsing/plot_functions.py", line 426, in <module>
+    parse_obj_as(list[Filter], request_json)
+  File "pydantic/tools.py", line 38, in pydantic.tools.parse_obj_as
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 4 validation errors for ParsingModel[list[log_parsing.plot_functions.Filter]]
+__root__ -> 0 -> dateRange
+  field required (type=value_error.missing)
+__root__ -> 0 -> pageNames
+  field required (type=value_error.missing)
+__root__ -> 1 -> dateRange
+  field required (type=value_error.missing)
+__root__ -> 1 -> pageNames
+  field required (type=value_error.missing)
+2023-03-27 19:24:38,343 | config | INFO
+    Logger initialized
+2023-03-27 19:24:38,353 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:24:38,430 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/dashboard/app.py", line 11, in <module>
+    from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot
+  File "/home/rik/git/log-analysis/log_parsing/plot_functions.py", line 426, in <module>
+    parse_obj_as(list[Filter], request_json)
+  File "pydantic/tools.py", line 38, in pydantic.tools.parse_obj_as
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 4 validation errors for ParsingModel[list[log_parsing.plot_functions.Filter]]
+__root__ -> 0 -> dateRange
+  field required (type=value_error.missing)
+__root__ -> 0 -> pageNames
+  field required (type=value_error.missing)
+__root__ -> 1 -> dateRange
+  field required (type=value_error.missing)
+__root__ -> 1 -> pageNames
+  field required (type=value_error.missing)
+2023-03-27 19:24:42,605 | config | INFO
+    Logger initialized
+2023-03-27 19:24:42,616 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:26:38,247 | config | INFO
+    Logger initialized
+2023-03-27 19:26:38,275 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:26:39,325 | config | INFO
+    Logger initialized
+2023-03-27 19:26:39,355 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:26:55,922 | config | INFO
+    Logger initialized
+2023-03-27 19:26:55,965 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:26:57,031 | config | INFO
+    Logger initialized
+2023-03-27 19:26:57,059 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:27:42,903 | config | INFO
+    Logger initialized
+2023-03-27 19:27:42,933 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:27:42,933 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/dashboard/app.py", line 12, in <module>
+    from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot, FilterModel
+  File "/home/rik/git/log-analysis/log_parsing/plot_functions.py", line 25
+    def to_filtered_
+                    ^
+SyntaxError: invalid syntax
+2023-03-27 19:32:56,759 | config | INFO
+    Logger initialized
+2023-03-27 19:32:56,790 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:32:57,888 | config | INFO
+    Logger initialized
+2023-03-27 19:32:57,916 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:33:41,493 | config | INFO
+    Logger initialized
+2023-03-27 19:33:41,521 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:33:49,112 | config | INFO
+    Logger initialized
+2023-03-27 19:33:49,144 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:34:51,308 | config | INFO
+    Logger initialized
+2023-03-27 19:34:51,335 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:34:52,329 | config | INFO
+    Logger initialized
+2023-03-27 19:34:52,356 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:35:10,361 | config | INFO
+    Logger initialized
+2023-03-27 19:35:10,390 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:35:15,316 | config | INFO
+    Logger initialized
+2023-03-27 19:35:15,344 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:35:16,394 | config | INFO
+    Logger initialized
+2023-03-27 19:35:16,422 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:35:37,319 | config | INFO
+    Logger initialized
+2023-03-27 19:35:37,347 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:36:11,268 | config | INFO
+    Logger initialized
+2023-03-27 19:36:11,297 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:36:12,359 | config | INFO
+    Logger initialized
+2023-03-27 19:36:12,386 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:36:28,192 | config | INFO
+    Logger initialized
+2023-03-27 19:36:28,221 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:36:28,225 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/dashboard/app.py", line 12, in <module>
+    from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot, FilterModel
+  File "/home/rik/git/log-analysis/log_parsing/plot_functions.py", line 418
+    if __name__ == 
+                   ^
+SyntaxError: invalid syntax
+2023-03-27 19:38:03,630 | config | INFO
+    Logger initialized
+2023-03-27 19:38:03,642 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:44:18,207 | config | INFO
+    Logger initialized
+2023-03-27 19:44:18,235 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:44:19,319 | config | INFO
+    Logger initialized
+2023-03-27 19:44:19,351 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:45:12,258 | config | INFO
+    Logger initialized
+2023-03-27 19:45:12,286 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:45:13,380 | config | INFO
+    Logger initialized
+2023-03-27 19:45:13,410 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:51:47,937 | config | INFO
+    Logger initialized
+2023-03-27 19:51:47,964 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:51:49,034 | config | INFO
+    Logger initialized
+2023-03-27 19:51:49,062 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:56:24,882 | config | INFO
+    Logger initialized
+2023-03-27 19:56:24,912 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:56:54,259 | config | INFO
+    Logger initialized
+2023-03-27 19:56:54,287 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:57:35,739 | config | INFO
+    Logger initialized
+2023-03-27 19:57:35,766 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:57:36,785 | config | INFO
+    Logger initialized
+2023-03-27 19:57:36,813 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:59:57,543 | config | INFO
+    Logger initialized
+2023-03-27 19:59:57,571 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 19:59:58,611 | config | INFO
+    Logger initialized
+2023-03-27 19:59:58,640 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 20:00:34,087 | config | INFO
+    Logger initialized
+2023-03-27 20:00:34,115 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-03-27 20:00:37,563 | config | INFO
+    Logger initialized
+2023-03-27 20:00:37,591 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.

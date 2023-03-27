@@ -15,6 +15,7 @@ tqdm
 polars
 connectorx
 pyarrow
+pydantic
 scipy
 python-dotenv
 geoip2

@@ -122,10 +122,10 @@ class FilterRow {
     this.row.classList.add('filter-row')
 
     this.filters = {
-      'date-range': new DatePicker(data.minDate, data.maxDate),
+      'dateRange': new DatePicker(data.minDate, data.maxDate),
       'countries': new MultiSelect(data.countries, 'Country'),
       'continents': new MultiSelect(data.continents, 'Continent'),
-      'page-names': new MultiSelect(data.pageNames, 'Page Name')
+      'pageNames': new MultiSelect(data.pageNames, 'Page Name')
     }
 
     this.deleteButton = document.createElement('button');

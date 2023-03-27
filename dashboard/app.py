@@ -6,9 +6,10 @@ import polars as pl
 from dash import Dash, Input, Output, dcc, html
 
 from log_parsing.database_def import TableNames
+from pydantic import parse_obj_as, ValidationError
 from log_parsing.parse_access_log import load_df_from_db
 from flask import request, jsonify
-from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot
+from log_parsing.plot_functions import FilteredDataFrame, make_weekday_plot, FilterModel
 
 ASSETS = Path(__file__).parent / "assets"
 
@@ -17,10 +18,11 @@ date_start = df["time"][0]
 date_end = df["time"][-1]
 filtered_dfs = [
     FilteredDataFrame(df),
-    FilteredDataFrame(df, continent="Europe"),
-    FilteredDataFrame(df, country="Denmark"),
-    FilteredDataFrame(df, page_name="home"),
+    FilteredDataFrame(df, continents=["Europe", "Asia"]),
+    FilteredDataFrame(df, countries=["Denmark", "Sweden"]),
+    FilteredDataFrame(df, page_names=["home"]),
 ]
+
 
 external_scripts = [
     "https://code.jquery.com/jquery-3.6.4.min.js",
@@ -53,14 +55,6 @@ colors = {
     "text": "#7FDBFF",
 }
 
-# I should use this:
-# https://davidstutz.github.io/bootstrap-multiselect/#getting-started
-
-# @app.callback(
-#     Output("weekday", "figure"),
-# )
-# def update_figure():
-#     return make_weekday_plot(filtered_dfs)
 fig = make_weekday_plot(filtered_dfs)
 
 filter_json = {
@@ -79,30 +73,35 @@ def return_filter_json():
 
 
 @app.server.route("/filter-data", methods=["GET", "POST"])
-def test_route():
+def parse_filters():
     request_json = request.get_json()
-    print(request_json)
+    try:
+        filter_list = parse_obj_as(list[FilterModel], request_json)
+    except ValidationError:
+        print("Invalid filter")
+        print(request_json)
+        return jsonify({"success": False})
+    filtered_dfs = [filter.to_filtered_data_frame(df) for filter in filter_list]
+    with app.server.app_context():
+        fig = make_weekday_plot(filtered_dfs)
+        app.layout.children[1].figure = fig
+
     return jsonify({"success": True})
+
+
+# we need a way to update the figures through a callback or not
+# one stupid way is to use the interval element as trigger
 
 
 app.layout = html.Div(
     style={"backgroundColor": colors["background"]},
     children=[
         html.Br(),
-        html.Label("Smoothing"),
-        dcc.Slider(
-            id="smoother",
-            min=0,
-            max=100,
-            marks={i: str(i) for i in range(0, 101, 10)},
-            value=0,
-        ),
         dcc.Graph(id="weekday", figure=fig),
     ],
 )
 
 if __name__ == "__main__":
-    ...
     app.run_server(debug=True)
 
 # %%

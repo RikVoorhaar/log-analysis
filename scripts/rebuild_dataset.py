@@ -15,7 +15,7 @@ if SQLITE_DB_PATH.exists():
     SQLITE_DB_PATH.rename(BACKUP_PATH / SQLITE_DB_PATH.name)
 
 # Move all the items out of /parsed
-log_files = (LOGS_PATH / "parsed").glob('*')
+log_files = (LOGS_PATH / "parsed").glob("*")
 for log_file in log_files:
     log_file.rename(LOGS_PATH / log_file.name)
 
