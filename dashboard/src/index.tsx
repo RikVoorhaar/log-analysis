@@ -7,6 +7,7 @@ import PlotlyGraph from "./plotlyGraph"
 const App = () => {
     const [plotIds, setPlotIds] = useState<string[]>([])
     const [plotsData, setPlotsData] = useState<{ [key: string]: any }>({})
+    const [filterContainerHeight, setFilterContainerHeight] = useState<number>(0)
 
     useEffect(() => {
         fetch("/all-plots/")
@@ -45,19 +46,41 @@ const App = () => {
         updatePlots(data)
     }
 
+    const handleResize = () => {
+        const filterContainer: HTMLDivElement | null =
+            document.querySelector(".filter-container")
+        if (filterContainer) {
+            const filterContainerHeight = filterContainer.offsetHeight
+            setFilterContainerHeight(filterContainerHeight)
+        }
+    }
+
+    useEffect(() => {
+        const plotContainer: HTMLDivElement = document.getElementById(
+            "plot-container"
+        ) as HTMLDivElement
+        if (plotContainer) {
+            plotContainer.style.paddingTop = `${filterContainerHeight}px`
+        }
+    }, [filterContainerHeight])
+
     return (
         <div>
-            <h1> My dashboard</h1>
-            <FilterContainerComponent onFilterDataChange={handleFilterDataChange} />
-            {plotIds.map((id) => (
-                <PlotlyGraph
-                    key={id}
-                    id={id}
-                    data={plotsData[id]?.data || []}
-                    layout={plotsData[id]?.layout || {}}
-                    config={plotsData[id]?.config || {}}
-                />
-            ))}
+            <FilterContainerComponent
+                onFilterDataChange={handleFilterDataChange}
+                onResize={handleResize}
+            />
+            <div id="plot-container">
+                {plotIds.map((id) => (
+                    <PlotlyGraph
+                        key={id}
+                        id={id}
+                        data={plotsData[id]?.data || []}
+                        layout={plotsData[id]?.layout || {}}
+                        config={plotsData[id]?.config || {}}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

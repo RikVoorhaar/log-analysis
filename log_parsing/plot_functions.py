@@ -22,6 +22,7 @@ class FilterModel(BaseModel):
     countries: list[str] | None
     continents: list[str] | None
     pageNames: list[str] | None
+    index: int
 
     @validator("dateRange", pre=True)
     def validate_date_range(cls, v):
@@ -44,6 +45,11 @@ class FilterModel(BaseModel):
             return None
         return v
 
+    @validator("index", pre=True)
+    def unpack_list(cls, v):
+        """Index is packet as list[str], but we just want a single int"""
+        return int(v[0])
+
     def to_filtered_data_frame(self, df: pl.DataFrame):
         return FilteredDataFrame(
             df,
@@ -52,6 +58,7 @@ class FilterModel(BaseModel):
             countries=self.countries,
             continents=self.continents,
             page_names=self.pageNames,
+            index=self.index,
         )
 
 
@@ -64,7 +71,11 @@ class FilteredDataFrame:
         countries: list[str] | None = None,
         continents: list[str] | None = None,
         page_names: list[str] | None = None,
+        index: int | None = None,
     ):
+        if index is None:
+            index = 0
+        self.index = index
         self.date_start = date_start
         self.date_end = date_end
         self.countries = countries
@@ -121,6 +132,10 @@ class FilteredDataFrame:
                 page_names_string = ", ".join(self.page_names)
                 labels.append(f"Pages=[{page_names_string}]")
         return labels
+
+    @property
+    def plot_number(self) -> str:
+        return str(self.index + 1)
 
     @property
     def plot_label(self) -> str:
@@ -238,7 +253,7 @@ def make_line_plot(
             go.Scatter(
                 x=plot_df[x_label],
                 y=plot_df[y_label],
-                name=filter.plot_label,
+                name=filter.plot_number,
                 hovertemplate=r"%{y:.4f}<extra></extra>",
             )
         )
@@ -298,7 +313,7 @@ def make_weekday_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
             go.Bar(
                 x=wk_df[x_label],
                 y=wk_df[y_label],
-                name=filter.plot_label,
+                name=filter.plot_number,
                 hovertemplate=r"%{y:.4f}<extra></extra>",
             )
         )
@@ -334,7 +349,7 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
                 y=df_bar[x_label],
                 x=df_bar[y_label],
                 orientation="h",
-                name=filter.plot_label,
+                name=filter.plot_number,
                 hovertemplate=r"%{x:.4f}<extra></extra>",
             )
         )
@@ -342,13 +357,13 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     fig.update_xaxes(type="log", automargin=True)
     fig.update_yaxes(automargin=True)
     fig.update_layout(
-        height=len(all_labels) * height_per_row, legend_title_text="Filter"
+        height=max(len(all_labels), 2) * height_per_row, legend_title_text="Filter"
     )
     return fig
 
 
 def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
-    plot_labels = [fdf.plot_label for fdf in filtered_dfs]
+    plot_labels = [fdf.plot_number for fdf in filtered_dfs]
     x_label = "Country"
     val_counts = [
         fdf.dataframe["country"]
@@ -356,7 +371,7 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         .value_counts()
         .sort(by=x_label)
         .with_columns(pl.col("counts").cast(pl.Float32) / pl.col("counts").sum())
-        .rename({"counts": fdf.plot_label})
+        .rename({"counts": fdf.plot_number})
         for fdf in filtered_dfs
     ]
     joined = val_counts[0]
@@ -397,7 +412,7 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
             go.Bar(
                 x=wk_df[y_label],
                 y=wk_df[x_label],
-                name=filter.plot_label,
+                name=filter.plot_number,
                 hovertemplate=r"%{x:.4f}<extra></extra>",
                 orientation="h",
             )
@@ -444,10 +459,10 @@ if __name__ == "__main__":
     date_start = df["time"][0]
     date_end = df["time"][-1]
     filtered_dfs = [
-        FilteredDataFrame(df),
-        FilteredDataFrame(df, continents=["Europe", "Asia"]),
-        FilteredDataFrame(df, countries=["Denmark", "Sweden"]),
-        FilteredDataFrame(df, page_names=["home"]),
+        FilteredDataFrame(df, index=0),
+        FilteredDataFrame(df, continents=["Europe", "Asia"], index=1),
+        FilteredDataFrame(df, countries=["Denmark", "Sweden"], index=2),
+        FilteredDataFrame(df, page_names=["home"], index=3),
     ]
 
     for plot_function in plot_functions.values():

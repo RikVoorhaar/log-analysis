@@ -3,23 +3,34 @@
     flex-wrap: wrap;
     align-items: left;
     margin-bottom: 0px;
-  }
-  
-  .filter-row .form-group,
-  .filter-row .input-group {
+}
+
+.filter-row .form-group,
+.filter-row .input-group {
     margin-right: 10px;
-  }
-  
-  .filter-row .form-group:last-child {
+}
+
+.filter-row .form-group:last-child {
     margin-right: 0;
-  }
-  
-  .filter-row .input-daterange {
+}
+
+.filter-row .input-daterange {
     width: 240px;
     height: 24px !important;
-  }
-  
-  .filter-row button {
+}
+
+.filter-row button {
     padding: 0px;
     margin-right: 10px;
-  }
+}
+
+.filter-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}

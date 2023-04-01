@@ -1,4 +1,21 @@
 
+Everything sees to work now. Here's a todo:
+- Add plot titles
+- Make filters apear above graph; not next to graph
+<!-- - Make filters a floating element, perhaps in a collapsible thing -->
+- Improve layout; now it's horendous
+- Page popularity plot breaks when we have a single page only
+- Updating daterange doesn't trigger the update
+- We need to add a feedback for when a filter is empty
+- Delete button should be a cross
+- Add filter button should be moved, and maybe look nicer
+<!-- - Colors need to be consistent; each filter has an index, and color should be tied to index. We should be able to see the color in a preview in the filter row. This also means that we can remove the label in the plots; we just number them.  -->
+- add colors to filter list
+- Make it impossible to delete the last filter
+- add logging and timing
+
+
+
 Plots to try:
 - Country breakdowns for page / date range
 - Relative ranking of pages

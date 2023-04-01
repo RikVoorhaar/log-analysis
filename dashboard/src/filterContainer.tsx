@@ -3,10 +3,11 @@ import { FilterContainer } from "./filters"
 
 interface FilterContainerComponentProps {
     onFilterDataChange: (data: any) => void
+    onResize: () => void
 }
 
 const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
-    onFilterDataChange,
+    onFilterDataChange, onResize
 }) => {
     const filterRowsContainerRef = useRef<HTMLDivElement>(null)
     const addFilterButtonRef = useRef<HTMLButtonElement>(null)
@@ -27,6 +28,7 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
         )
         filterContainerRef.current = filterContainer
         filterContainer.on("dataChange", onFilterDataChange)
+        filterContainer.on("containerResize", onResize)
 
         // Cleanup function
         return () => {
@@ -37,7 +39,9 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     }, []) // Add an empty dependency array
 
     return (
-        <div>
+        <div className="filter-container">
+            <h2>Filters</h2>
+            <hr></hr>
             <div id="filter-rows" ref={filterRowsContainerRef}></div>
             <button
                 id="add-filter"

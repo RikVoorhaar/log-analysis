@@ -112,8 +112,10 @@ class FilterRow {
     private filters: Record<string, FilterElement>
     private eventEmitter: EventEmitter
     private deleteButton: HTMLButtonElement
+    public index: number
 
-    constructor(data: FilterOptionsInterface) {
+    constructor(data: FilterOptionsInterface, index: number) {
+        this.index = index
         this.row = document.createElement("div")
         this.row.classList.add("filter-row")
 
@@ -150,6 +152,7 @@ class FilterRow {
             const filter = this.filters[key]
             data[key] = filter.getValues()
         }
+        data["index"] = [this.index.toString()]
         return data
     }
 
@@ -216,21 +219,29 @@ export class FilterContainer extends EventEmitter {
     }
 
     private addFilter(): void {
-        const filterRow = new FilterRow(this.filterOptions)
+        const filterRow = new FilterRow(this.filterOptions, this.filterRowList.length)
         this.filterRowList.push(filterRow)
         this.filterRowsContainer.appendChild(filterRow.row)
         filterRow.render()
         filterRow.on("change", () => {
-            this.emitUpdate()
+            this.emitDataChangeEvent()
         })
         filterRow.on("delete", (deletedFilterRow: FilterRow) => {
             const index = this.filterRowList.indexOf(deletedFilterRow)
             if (index !== -1) {
                 this.filterRowList.splice(index, 1)
             }
-            this.emitUpdate()
+            this.emitDataChangeEvent()
+            this.emitResizeEvent()
         })
-        this.emitUpdate()
+        this.emitDataChangeEvent()
+        this.emitResizeEvent()
+    }
+
+    private updateIndices(): void {
+        this.filterRowList.forEach((filterRow, index) => {
+            filterRow.index = index
+        })
     }
 
     public getData(): { [key: string]: string[] }[] {
@@ -242,26 +253,12 @@ export class FilterContainer extends EventEmitter {
         return data
     }
 
-    public emitUpdate() {
+    public emitDataChangeEvent() {
         this.emit("dataChange", this.getData())
-        // fetch("/filter-data", {
-        //     method: "POST",
-        //     body: JSON.stringify(this.getData()),
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         // Handle response
-        //         console.log(data)
-        //     })
-        //     .catch((error) => console.error(error))
+    }
+
+    public emitResizeEvent() {
+        this.updateIndices()
+        this.emit("containerResize")
     }
 }
-
-// function init(): void {
-//   const filterContainer = new FilterContainer()
-// }
-
-// init()
