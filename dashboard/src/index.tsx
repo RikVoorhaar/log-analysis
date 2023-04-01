@@ -6,7 +6,7 @@ import PlotlyGraph from "./plotlyGraph"
 
 const App = () => {
     const [plotIds, setPlotIds] = useState<string[]>([])
-    const [plotsData, setPlotsData] = useState<any[]>([])
+    const [plotsData, setPlotsData] = useState<{ [key: string]: any }>({})
 
     useEffect(() => {
         fetch("/all-plots/")
@@ -15,16 +15,29 @@ const App = () => {
             .catch((err) => console.error(err))
     }, [])
 
-    const updatePlots = (data: any) => {
+    const updatePlots = (filters: any) => {
         fetch("/filter-data/", {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(filters),
             headers: {
                 "Content-Type": "application/json",
             },
         })
             .then((response) => response.json())
-            .then((data) => setPlotsData(data))
+            .then((rawData: Record<string, string>) => {
+                const parsedData = Object.entries(rawData).reduce(
+                    (
+                        acc: Record<string, any>,
+                        [plotId, jsonString]: [string, string]
+                    ) => {
+                        acc[plotId] = JSON.parse(jsonString)
+                        return acc
+                    },
+                    {}
+                )
+                setPlotsData(parsedData)
+            })
+
             .catch((err) => console.error(err))
     }
 
@@ -36,13 +49,13 @@ const App = () => {
         <div>
             <h1> My dashboard</h1>
             <FilterContainerComponent onFilterDataChange={handleFilterDataChange} />
-            {plotIds.map((id, index) => (
+            {plotIds.map((id) => (
                 <PlotlyGraph
                     key={id}
                     id={id}
-                    data={plotsData[index]?.data || []}
-                    layout={plotsData[index]?.layout || {}}
-                    config={plotsData[index]?.config || {}}
+                    data={plotsData[id]?.data || []}
+                    layout={plotsData[id]?.layout || {}}
+                    config={plotsData[id]?.config || {}}
                 />
             ))}
         </div>

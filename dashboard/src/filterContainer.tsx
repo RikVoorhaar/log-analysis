@@ -26,12 +26,15 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
             addFilterButton
         )
         filterContainerRef.current = filterContainer
-    }, [])
-    useEffect(() => {
-        if (filterContainerRef.current) {
-            filterContainerRef.current.on("dataChange", onFilterDataChange)
+        filterContainer.on("dataChange", onFilterDataChange)
+
+        // Cleanup function
+        return () => {
+            if (filterContainerRef.current) {
+                filterContainerRef.current.off("dataChange", onFilterDataChange)
+            }
         }
-    }, [onFilterDataChange])
+    }, []) // Add an empty dependency array
 
     return (
         <div>

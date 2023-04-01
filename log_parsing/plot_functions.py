@@ -275,6 +275,11 @@ def get_rolling_mean_1w(df: pl.DataFrame) -> pl.DataFrame:
 
 def make_weekday_plot_data(df: pl.DataFrame) -> pl.DataFrame:
     weekday_df = df["weekday"].value_counts().sort(by="weekday")
+
+    if len(weekday_df) < 7:
+        weekday_all = pl.DataFrame({"weekday": np.arange(7) + 1})
+        weekday_df = weekday_all.join(weekday_df, on="weekday", how="left").fill_null(0)
+
     days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     weekday_df = weekday_df.with_columns(
         pl.Series(days_of_week).alias("weekday"),
@@ -342,7 +347,7 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     return fig
 
 
-def make_country_plot(filtered_df: list[FilteredDataFrame]) -> go.Figure:
+def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     plot_labels = [fdf.plot_label for fdf in filtered_dfs]
     x_label = "Country"
     val_counts = [
@@ -406,6 +411,34 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
 # %%
 
 
+def make_time_of_day_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+    return make_line_plot(
+        filtered_dfs,
+        make_hour_minute_plot_data,
+        "Time of day",
+        "relative frequency",
+        x_axis_kwargs={"tickformat": "%H:%M"},
+    )
+
+
+def make_date_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+    return make_line_plot(
+        filtered_dfs,
+        get_rolling_mean_1w,
+        "date",
+        "relative_counts",
+    )
+
+
+plot_functions: dict[str, Callable[[list[FilteredDataFrame]], go.Figure]] = {
+    "time_of_day": make_time_of_day_plot,
+    "date": make_date_plot,
+    "weekday": make_weekday_plot,
+    "page_popularity": make_page_popularity_plot,
+    "countries": make_country_plot,
+    "continent": make_continent_plot,
+}
+
 if __name__ == "__main__":
     df = load_df_from_db(TableNames.PAGES_LOG)
     date_start = df["time"][0]
@@ -417,35 +450,15 @@ if __name__ == "__main__":
         FilteredDataFrame(df, page_names=["home"]),
     ]
 
-    make_line_plot(
-        filtered_dfs,
-        make_hour_minute_plot_data,
-        "Time of day",
-        "relative frequency",
-        x_axis_kwargs={"tickformat": "%H:%M"},
-    ).show()
-    make_line_plot(
-        filtered_dfs,
-        get_rolling_mean_1w,
-        "date",
-        "relative_counts",
-    ).show()
-    make_weekday_plot(filtered_dfs).show()
-    make_page_popularity_plot(filtered_dfs).show()
-    make_country_plot(filtered_dfs).show()
-    make_continent_plot(filtered_dfs).show()
+    for plot_function in plot_functions.values():
+        plot_function(filtered_dfs).show()
+
 
 # %%
-if __name__ == "__main__":
-    request_json = [
-        {
-            "dateRange": ["2023-01-13", "2023-02-28"],
-            "countries": [],
-            "continents": ["Europe"],
-            "pageNames": [],
-        },
-    ]
-    filter_list = parse_obj_as(list[FilterModel], request_json)
-    print(filter_list)
 
-# %%
+weekday_df = pl.DataFrame({"weekday": [4, 5], "counts": [1, 1]})
+print(len(weekday_df))
+weekday_all = pl.DataFrame({"weekday": np.arange(7) + 1})
+weekday_all.join(weekday_df, on="weekday", how="left").fill_null(0)
+
+# filtered_dfs[0].dataframe["weekday"].value_counts().sort(by="weekday")
