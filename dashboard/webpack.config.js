@@ -1,10 +1,10 @@
 const path = require('path')
 
 module.exports = {
-    entry: './src/filters.ts',
+    entry: './src/index.tsx',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'assets')
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
@@ -13,7 +13,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 use: ['source-map-loader'],
                 enforce: 'pre'
             },

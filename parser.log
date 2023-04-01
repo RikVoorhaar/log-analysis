@@ -1585,3 +1585,165 @@ SyntaxError: invalid syntax
     Logger initialized
 2023-03-27 20:00:37,591 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-04-01 11:25:15,143 | config | INFO
+    Logger initialized
+2023-04-01 11:25:15,192 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:25:16,235 | config | INFO
+    Logger initialized
+2023-04-01 11:25:16,267 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:26:17,068 | config | INFO
+    Logger initialized
+2023-04-01 11:26:17,100 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:26:18,021 | config | INFO
+    Logger initialized
+2023-04-01 11:26:18,054 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:28:16,409 | config | INFO
+    Logger initialized
+2023-04-01 11:28:16,443 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:28:16,875 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/dashboard/app.py", line 105, in <module>
+    def dist(path):
+  File "/home/rik/git/log-analysis/.venv/lib/python3.10/site-packages/flask/scaffold.py", line 449, in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+  File "/home/rik/git/log-analysis/.venv/lib/python3.10/site-packages/flask/scaffold.py", line 50, in wrapper_func
+    return f(self, *args, **kwargs)
+  File "/home/rik/git/log-analysis/.venv/lib/python3.10/site-packages/flask/app.py", line 1354, in add_url_rule
+    rule = self.url_rule_class(rule, methods=methods, **options)
+  File "/home/rik/git/log-analysis/.venv/lib/python3.10/site-packages/werkzeug/routing/rules.py", line 455, in __init__
+    raise ValueError("urls must start with a leading slash")
+ValueError: urls must start with a leading slash
+2023-04-01 11:28:27,130 | config | INFO
+    Logger initialized
+2023-04-01 11:28:27,191 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:28:38,165 | config | INFO
+    Logger initialized
+2023-04-01 11:28:38,226 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:29:01,873 | config | INFO
+    Logger initialized
+2023-04-01 11:29:01,905 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:29:02,795 | config | INFO
+    Logger initialized
+2023-04-01 11:29:02,826 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:29:25,944 | config | INFO
+    Logger initialized
+2023-04-01 11:29:25,979 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:29:38,636 | config | INFO
+    Logger initialized
+2023-04-01 11:29:38,671 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:29:54,032 | config | INFO
+    Logger initialized
+2023-04-01 11:29:54,092 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:31:57,319 | config | INFO
+    Logger initialized
+2023-04-01 11:31:57,380 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:32:53,370 | config | INFO
+    Logger initialized
+2023-04-01 11:32:53,431 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:34:20,533 | config | INFO
+    Logger initialized
+2023-04-01 11:34:20,619 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 11:35:18,289 | config | INFO
+    Logger initialized
+2023-04-01 11:35:18,376 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:48:33,496 | config | INFO
+    Logger initialized
+2023-04-01 12:48:33,520 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:49:08,845 | config | INFO
+    Logger initialized
+2023-04-01 12:49:08,854 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:49:09,775 | config | INFO
+    Logger initialized
+2023-04-01 12:49:09,785 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:49:58,109 | config | INFO
+    Logger initialized
+2023-04-01 12:49:58,118 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:49:59,020 | config | INFO
+    Logger initialized
+2023-04-01 12:49:59,029 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:51:04,954 | config | INFO
+    Logger initialized
+2023-04-01 12:51:04,964 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:51:08,283 | config | INFO
+    Logger initialized
+2023-04-01 12:51:08,292 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:51:52,149 | config | INFO
+    Logger initialized
+2023-04-01 12:51:52,160 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:51:55,487 | config | INFO
+    Logger initialized
+2023-04-01 12:51:55,497 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:52:30,259 | config | INFO
+    Logger initialized
+2023-04-01 12:52:30,268 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:52:31,193 | config | INFO
+    Logger initialized
+2023-04-01 12:52:31,202 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:52:51,930 | config | INFO
+    Logger initialized
+2023-04-01 12:52:51,940 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 12:52:52,932 | config | INFO
+    Logger initialized
+2023-04-01 12:52:52,941 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:44:35,723 | config | INFO
+    Logger initialized
+2023-04-01 13:44:35,732 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:44:36,704 | config | INFO
+    Logger initialized
+2023-04-01 13:44:36,716 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:56:01,071 | config | INFO
+    Logger initialized
+2023-04-01 13:56:01,080 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:56:01,991 | config | INFO
+    Logger initialized
+2023-04-01 13:56:02,001 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:56:33,110 | config | INFO
+    Logger initialized
+2023-04-01 13:56:33,121 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:56:34,081 | config | INFO
+    Logger initialized
+2023-04-01 13:56:34,091 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:58:28,257 | config | INFO
+    Logger initialized
+2023-04-01 13:58:28,267 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-01 13:58:29,285 | config | INFO
+    Logger initialized
+2023-04-01 13:58:29,296 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
