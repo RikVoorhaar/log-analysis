@@ -1,12 +1,15 @@
-import "bootstrap"
+// import "bootstrap"
 import "bootstrap-datepicker"
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css"
 import "bootstrap-select"
+import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap-select/dist/css/bootstrap-select.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { EventEmitter } from "events"
 import $ from "jquery"
 import "./filter.css"
+
+const MAX_NUM_FILTERS: number = 6
 
 abstract class FilterElement {
     public container: HTMLDivElement
@@ -111,7 +114,7 @@ class FilterRow {
     public row: HTMLDivElement
     private filters: Record<string, FilterElement>
     private eventEmitter: EventEmitter
-    private deleteButton: HTMLButtonElement
+    public deleteButton: HTMLButtonElement
     public index: number
 
     constructor(data: FilterOptionsInterface, index: number) {
@@ -127,8 +130,9 @@ class FilterRow {
         }
 
         this.deleteButton = document.createElement("button")
-        this.deleteButton.classList.add("btn", "btn-primary")
-        this.deleteButton.textContent = "Delete"
+        this.deleteButton.classList.add("btn", "btn-delete", "btn-sm")
+        this.deleteButton.innerHTML = '<i class="bi bi-x-lg"></i>'
+        this.deleteButton.setAttribute("aria-label", "Delete")
         this.deleteButton.addEventListener("click", () => {
             this.delete()
         })
@@ -186,6 +190,7 @@ export class FilterContainer extends EventEmitter {
     private filterOptions!: FilterOptionsInterface
     private filterRowList!: FilterRow[]
     private filterRowsContainer!: HTMLDivElement
+    private addFilterButton!: HTMLButtonElement
 
     constructor(
         filterRowsContainer: HTMLDivElement,
@@ -200,6 +205,7 @@ export class FilterContainer extends EventEmitter {
         }
 
         this.filterRowsContainer = filterRowsContainer
+        this.addFilterButton = addFilterButton
 
         this.filterRowList = []
 
@@ -258,6 +264,19 @@ export class FilterContainer extends EventEmitter {
     }
 
     public emitResizeEvent() {
+        if (this.filterRowList.length >= MAX_NUM_FILTERS) {
+            this.addFilterButton.disabled = true
+        } else {
+            this.addFilterButton.disabled = false
+        }
+
+        if (this.filterRowList.length == 1) {
+            this.filterRowList[0].deleteButton.disabled = true
+        } else {
+            this.filterRowList.forEach((filterRow) => {
+                filterRow.deleteButton.disabled = false
+            })
+        }
         this.updateIndices()
         this.emit("containerResize")
     }

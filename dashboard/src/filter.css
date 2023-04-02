@@ -25,7 +25,7 @@
 }
 
 .filter-container {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
@@ -33,4 +33,27 @@
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
+    transition: "max-height 0.5s ease-in-out";
+}
+
+.btn-delete {
+    background-color: transparent;
+    border: none;
+}
+.btn-delete .bi {
+    color: red;
+}
+.btn-delete:hover .bi,
+.btn-delete:focus .bi {
+    color: darkred;
+    text-decoration: none;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    padding: 0px 4px;
 }

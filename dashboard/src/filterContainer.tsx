@@ -1,17 +1,28 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { FilterContainer } from "./filters"
 
 interface FilterContainerComponentProps {
     onFilterDataChange: (data: any) => void
-    onResize: () => void
+    // onResize: () => void
 }
 
 const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
-    onFilterDataChange, onResize
+    onFilterDataChange,
+    // onResize,
 }) => {
     const filterRowsContainerRef = useRef<HTMLDivElement>(null)
     const addFilterButtonRef = useRef<HTMLButtonElement>(null)
     const filterContainerRef = useRef<FilterContainer>()
+    const [showFilterContainer, setShowFilterContainer] = useState<boolean>(true)
+
+    const toggleFilterContainer = () => {
+        setShowFilterContainer(!showFilterContainer)
+    }
+    const filterContainerStyle = {
+        maxHeight: showFilterContainer ? "100vh" : "0",
+        transition: "max-height 0.5s ease-in-out",
+        // overflow: "hidden",
+    }
 
     useEffect(() => {
         const filterRowsContainer = filterRowsContainerRef.current
@@ -28,7 +39,7 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
         )
         filterContainerRef.current = filterContainer
         filterContainer.on("dataChange", onFilterDataChange)
-        filterContainer.on("containerResize", onResize)
+        // filterContainer.on("containerResize", onResize)
 
         // Cleanup function
         return () => {
@@ -40,16 +51,21 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
 
     return (
         <div className="filter-container">
-            <h2>Filters</h2>
-            <hr></hr>
-            <div id="filter-rows" ref={filterRowsContainerRef}></div>
-            <button
-                id="add-filter"
-                ref={addFilterButtonRef}
-                className="btn btn-primary"
-            >
-                Add Filter
+            <button onClick={toggleFilterContainer} className="btn btn-outline-primary">
+                {showFilterContainer ? "Hide" : "Show"} filters
             </button>
+            <div style={filterContainerStyle}>
+                <hr></hr>
+                <button
+                    id="add-filter"
+                    ref={addFilterButtonRef}
+                    className="btn btn-outline-primary"
+                    style={{ padding: "0px 4px", marginBottom: "10px" }}
+                >
+                    <i className="bi bi-plus-lg"></i> Add Filter
+                </button>
+                <div id="filter-rows" ref={filterRowsContainerRef}></div>
+            </div>
         </div>
     )
 }

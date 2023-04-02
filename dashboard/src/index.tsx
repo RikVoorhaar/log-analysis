@@ -1,13 +1,20 @@
+import "./bootstrap-loader"
 import React, { useState, useEffect } from "react"
-import ReactDOM from "react-dom"
 import { createRoot } from "react-dom/client"
 import FilterContainerComponent from "./filterContainer"
 import PlotlyGraph from "./plotlyGraph"
 
+class EmptyFilterError extends Error {
+    constructor(message: string) {
+        super(message)
+        this.name = "EmptyFilterError"
+    }
+}
+
 const App = () => {
     const [plotIds, setPlotIds] = useState<string[]>([])
     const [plotsData, setPlotsData] = useState<{ [key: string]: any }>({})
-    const [filterContainerHeight, setFilterContainerHeight] = useState<number>(0)
+    // const [filterContainerHeight, setFilterContainerHeight] = useState<number>(0)
 
     useEffect(() => {
         fetch("/all-plots/")
@@ -24,7 +31,18 @@ const App = () => {
                 "Content-Type": "application/json",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((errorData) => {
+                        if (errorData.error_code === "EMPTY_FILTERS") {
+                            throw new EmptyFilterError(errorData.message)
+                        } else {
+                            throw new Error(errorData.message)
+                        }
+                    })
+                }
+                return response.json()
+            })
             .then((rawData: Record<string, string>) => {
                 const parsedData = Object.entries(rawData).reduce(
                     (
@@ -38,37 +56,42 @@ const App = () => {
                 )
                 setPlotsData(parsedData)
             })
-
-            .catch((err) => console.error(err))
+            .catch((err) => {
+                if (err instanceof EmptyFilterError) {
+                    // Do nothing;
+                } else {
+                    console.error(err)
+                }
+            })
     }
 
     const handleFilterDataChange = (data: any) => {
         updatePlots(data)
     }
 
-    const handleResize = () => {
-        const filterContainer: HTMLDivElement | null =
-            document.querySelector(".filter-container")
-        if (filterContainer) {
-            const filterContainerHeight = filterContainer.offsetHeight
-            setFilterContainerHeight(filterContainerHeight)
-        }
-    }
+    // const handleResize = () => {
+    //     const filterContainer: HTMLDivElement | null =
+    //         document.querySelector(".filter-container")
+    //     if (filterContainer) {
+    //         const filterContainerHeight = filterContainer.offsetHeight
+    //         setFilterContainerHeight(filterContainerHeight)
+    //     }
+    // }
 
-    useEffect(() => {
-        const plotContainer: HTMLDivElement = document.getElementById(
-            "plot-container"
-        ) as HTMLDivElement
-        if (plotContainer) {
-            plotContainer.style.paddingTop = `${filterContainerHeight}px`
-        }
-    }, [filterContainerHeight])
+    // useEffect(() => {
+    //     const plotContainer: HTMLDivElement = document.getElementById(
+    //         "plot-container"
+    //     ) as HTMLDivElement
+    //     if (plotContainer) {
+    //         plotContainer.style.paddingTop = `${filterContainerHeight}px`
+    //     }
+    // }, [filterContainerHeight])
 
     return (
-        <div>
+        <div className="app-container" data-bs-theme="dark">
             <FilterContainerComponent
                 onFilterDataChange={handleFilterDataChange}
-                onResize={handleResize}
+                // onResize={handleResize}
             />
             <div id="plot-container">
                 {plotIds.map((id) => (

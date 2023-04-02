@@ -262,7 +262,10 @@ def make_line_plot(
     if layout_kwargs is None:
         layout_kwargs = {}
     fig.update_layout(
-        legend_title_text="Filter", hovermode="x unified", **layout_kwargs
+        legend_title_text="Filter",
+        hovermode="x unified",
+        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+        **layout_kwargs,
     )
     if x_axis_kwargs is None:
         x_axis_kwargs = {}
@@ -317,7 +320,10 @@ def make_weekday_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
                 hovertemplate=r"%{y:.4f}<extra></extra>",
             )
         )
-    fig.update_layout(legend_title_text="Filter")
+    fig.update_layout(
+        legend_title_text="Filter",
+        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+    )
     return fig
 
 
@@ -357,7 +363,9 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     fig.update_xaxes(type="log", automargin=True)
     fig.update_yaxes(automargin=True)
     fig.update_layout(
-        height=max(len(all_labels), 2) * height_per_row, legend_title_text="Filter"
+        height=max(len(all_labels), 2) * height_per_row,
+        legend_title_text="Filter",
+        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
     )
     return fig
 
@@ -390,7 +398,11 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         top10.to_pandas(), y="Country", x=plot_labels, barmode="group", orientation="h"
     )
     height_per_row = 60
-    fig.update_layout(height=len(top10) * height_per_row, legend_title_text="Filter")
+    fig.update_layout(
+        height=len(top10) * height_per_row,
+        legend_title_text="Filter",
+        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+    )
     return fig
 
 
@@ -417,7 +429,10 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
                 orientation="h",
             )
         )
-    fig.update_layout(legend_title_text="Filter")
+    fig.update_layout(
+        legend_title_text="Filter",
+        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+    )
     return fig
 
 
