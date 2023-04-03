@@ -1970,3 +1970,7 @@ NameError: name 'date_start' is not defined
     Logger initialized
 2023-04-02 19:50:56,236 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-04-03 19:38:56,922 | config | INFO
+    Logger initialized
+2023-04-03 19:38:56,950 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.

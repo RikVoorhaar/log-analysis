@@ -13,6 +13,7 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     const filterRowsContainerRef = useRef<HTMLDivElement>(null)
     const addFilterButtonRef = useRef<HTMLButtonElement>(null)
     const filterContainerRef = useRef<FilterContainer>()
+    const mainDivRef = useRef<HTMLDivElement>(null)
     const [showFilterContainer, setShowFilterContainer] = useState<boolean>(true)
 
     const toggleFilterContainer = () => {
@@ -21,7 +22,6 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     const filterContainerStyle = {
         maxHeight: showFilterContainer ? "100vh" : "0",
         transition: "max-height 0.5s ease-in-out",
-        // overflow: "hidden",
     }
 
     useEffect(() => {
@@ -49,12 +49,26 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
         }
     }, []) // Add an empty dependency array
 
+    const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+        if (e.propertyName === "max-height") {
+            if (showFilterContainer && mainDivRef.current) {
+                mainDivRef.current.style.overflow = "visible"
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (mainDivRef.current) {
+            mainDivRef.current.style.overflow = "hidden"
+        }
+    }, [showFilterContainer])
+
     return (
-        <div className="filter-container">
+        <div className="filter-container" ref={mainDivRef}>
             <button onClick={toggleFilterContainer} className="btn btn-outline-primary">
                 {showFilterContainer ? "Hide" : "Show"} filters
             </button>
-            <div style={filterContainerStyle}>
+            <div style={filterContainerStyle} onTransitionEnd={handleTransitionEnd}>
                 <hr></hr>
                 <button
                     id="add-filter"
