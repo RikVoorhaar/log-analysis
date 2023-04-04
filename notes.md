@@ -13,6 +13,8 @@ Everything sees to work now. Here's a todo:
 - add colors to filter list
 - Make it impossible to delete the last filter
 - add logging and timing
+- The date plot seems to be missing the first/last couple days
+
 
 
 

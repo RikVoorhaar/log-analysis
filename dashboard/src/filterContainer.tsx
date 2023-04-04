@@ -14,6 +14,7 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     const addFilterButtonRef = useRef<HTMLButtonElement>(null)
     const filterContainerRef = useRef<FilterContainer>()
     const mainDivRef = useRef<HTMLDivElement>(null)
+    const firstLoadRef = useRef<boolean>(true)
     const [showFilterContainer, setShowFilterContainer] = useState<boolean>(true)
 
     const toggleFilterContainer = () => {
@@ -52,14 +53,19 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
         if (e.propertyName === "max-height") {
             if (showFilterContainer && mainDivRef.current) {
-                mainDivRef.current.style.overflow = "visible"
+                mainDivRef.current.style.overflowY = "visible"
             }
         }
     }
 
     useEffect(() => {
         if (mainDivRef.current) {
-            mainDivRef.current.style.overflow = "hidden"
+            if (firstLoadRef.current) {
+                mainDivRef.current.style.overflowY = "visible"
+                firstLoadRef.current = false
+            } else {
+                mainDivRef.current.style.overflowY = "hidden"
+            }
         }
     }, [showFilterContainer])
 

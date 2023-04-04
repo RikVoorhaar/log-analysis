@@ -24,13 +24,6 @@ app.config["PROPAGATE_EXCEPTIONS"] = True
 df = load_df_from_db(TableNames.PAGES_LOG)
 date_start = df["time"][0]
 date_end = df["time"][-1]
-# filtered_dfs = [
-#     FilteredDataFrame(df),
-#     FilteredDataFrame(df, continents=["Europe", "Asia"]),
-#     FilteredDataFrame(df, countries=["Denmark", "Sweden"]),
-#     FilteredDataFrame(df, page_names=["home"]),
-# ]
-
 
 colors = {
     "background": "#FFFFFF",

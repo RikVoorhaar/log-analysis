@@ -38,9 +38,9 @@ class MultiSelect extends FilterElement {
         this.values = values
         this.label = label
 
-        this.container.classList.add("form-group")
+        this.container.classList.add("form-group", "multi-select-group")
         this.container.innerHTML = `
-      <select multiple id=${this.label} data-live-search="true">
+      <select multiple id=${this.label}>
         ${this.values.map((value) => `<option>${value}</option>`).join("")}
       </select>
     `
@@ -51,7 +51,14 @@ class MultiSelect extends FilterElement {
     }
 
     public render(): void {
-        $(this.container).find("select").selectpicker()
+        $(this.container).find("select").selectpicker({
+            liveSearch: true,
+            actionsBox: true,
+            header: this.label,
+            liveSearchNormalize: true,
+            noneSelectedText: `Select ${this.label}`,
+            width: "100%",
+        })
     }
 
     getValues(): string[] {
@@ -74,17 +81,19 @@ class DatePicker extends FilterElement {
         this.container.setAttribute("id", "datepicker")
 
         this.container.innerHTML = `
-      <div class="input-daterange input-group" id="datepicker">
-        <input type="text" class="input-sm form-control" name="start" />
-        <span class="input-group-addon">to</span>
-        <input type="text" class="input-sm form-control" name="end" />
-      </div>
-    `
+        <div class="input-daterange input-group input-group-sm" id="datepicker">
+            <input type="text" class="form-control" name="start" />
+                <div class="input-group-append input-group-prepend">
+                    <span class="input-group-text">to</span>
+                </div>
+            <input type="text" class="form-control" name="end" />
+        </div>
+        `
 
         const inputs = Array.from(this.container.querySelectorAll("input"))
 
         inputs.forEach((input) => {
-            input.addEventListener("change", () => {
+            input.addEventListener("input", () => {
                 this.eventEmitter.emit("change", undefined)
             })
         })
@@ -100,8 +109,13 @@ class DatePicker extends FilterElement {
             immediateUpdates: true,
             autoclose: true,
             clearBtn: true,
+            keepEmptyValues: true,
+            weekStart: 1
         })
         $(this.container).datepicker("update", [this.min_date, this.max_date])
+        $(this.container).datepicker().on("changeDate", () => {
+            this.eventEmitter.emit("change", undefined)
+        }) 
     }
 
     getValues(): string[] {

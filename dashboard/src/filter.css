@@ -1,8 +1,9 @@
 .filter-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: left;
     margin-bottom: 0px;
+    /* overflow-x: hidden; */
 }
 
 .filter-row .form-group,
@@ -57,3 +58,15 @@
 .btn {
     padding: 0px 4px;
 }
+
+input .form-control {
+    height: 24px !important;
+}
+
+.multi-select-group {
+    min-width: 150px;
+    max-width: 300px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
