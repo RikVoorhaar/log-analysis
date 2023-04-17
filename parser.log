@@ -1978,3 +1978,79 @@ NameError: name 'date_start' is not defined
     Logger initialized
 2023-04-04 18:47:45,183 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-04-17 17:43:08,332 | config | INFO
+    Logger initialized
+2023-04-17 17:43:08,345 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:45:46,757 | config | INFO
+    Logger initialized
+2023-04-17 17:45:46,776 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:47:10,764 | config | INFO
+    Logger initialized
+2023-04-17 17:47:10,781 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:50:33,170 | config | INFO
+    Logger initialized
+2023-04-17 17:50:33,188 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:50:42,975 | config | INFO
+    Logger initialized
+2023-04-17 17:50:42,998 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:51:30,006 | config | INFO
+    Logger initialized
+2023-04-17 17:51:30,032 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:51:41,678 | config | INFO
+    Logger initialized
+2023-04-17 17:51:41,705 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:56:35,229 | config | INFO
+    Logger initialized
+2023-04-17 17:56:35,247 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 17:58:12,309 | config | INFO
+    Logger initialized
+2023-04-17 17:58:12,328 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:00:32,301 | config | INFO
+    Logger initialized
+2023-04-17 18:00:32,318 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:02:44,157 | config | INFO
+    Logger initialized
+2023-04-17 18:02:44,177 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:03:51,324 | config | INFO
+    Logger initialized
+2023-04-17 18:03:51,343 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:05:38,370 | config | INFO
+    Logger initialized
+2023-04-17 18:05:38,388 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:12:41,139 | config | INFO
+    Logger initialized
+2023-04-17 18:12:41,158 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:13:06,769 | config | INFO
+    Logger initialized
+2023-04-17 18:13:06,786 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:15:53,453 | config | INFO
+    Logger initialized
+2023-04-17 18:15:53,473 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:16:17,002 | config | INFO
+    Logger initialized
+2023-04-17 18:16:17,020 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:25:56,102 | config | INFO
+    Logger initialized
+2023-04-17 18:25:56,119 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-17 18:29:18,820 | config | INFO
+    Logger initialized
+2023-04-17 18:29:18,839 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.

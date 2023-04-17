@@ -342,7 +342,6 @@ def make_page_popularity_plot_data(df: pl.DataFrame) -> pl.DataFrame:
 
 
 def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
-    height_per_row = 60
     x_label = "Page name"
     y_label = "Frequency"
     fig = go.Figure()
@@ -359,13 +358,26 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
                 hovertemplate=r"%{x:.4f}<extra></extra>",
             )
         )
+    height_per_row = 20 + 5 * len(filtered_dfs)
 
     fig.update_xaxes(type="log", automargin=True)
     fig.update_yaxes(automargin=True)
+    num_rows = len(all_labels)
+    num_filters = len(filtered_dfs)
+    height_per_row = 20 + 5 * num_filters
+    inner_height = num_rows * height_per_row
+    margin_top = 35
+    margin_bottom = 20
+    margin_l = 60
+    margin_r = 0
+    height = inner_height + margin_top + margin_bottom
+    legend_y = 1 + margin_top / height
+    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
-        height=max(len(all_labels), 2) * height_per_row,
+        height=height,
+        margin=margin,
         legend_title_text="Filter",
-        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+        legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
     return fig
 
@@ -392,16 +404,26 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         .sort(by="_counts_max", descending=True)
     ).drop("_counts_max")
     top10 = joined[:10]
-    top10
 
     fig = px.bar(
         top10.to_pandas(), y="Country", x=plot_labels, barmode="group", orientation="h"
     )
-    height_per_row = 60
+    num_filters = len(filtered_dfs)
+    num_rows = len(top10)
+    height_per_row = 20 + 5 * num_filters
+    inner_height = num_rows * height_per_row
+    margin_top = 35
+    margin_bottom = 20
+    margin_l = 60
+    margin_r = 0
+    height = inner_height + margin_top + margin_bottom
+    legend_y = 1 + margin_top / height
+    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
-        height=len(top10) * height_per_row,
+        height=height,
+        margin=margin,
         legend_title_text="Filter",
-        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+        legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
     return fig
 
@@ -419,7 +441,9 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     x_label = "continent"
     y_label = "Fraction"
     fig = go.Figure()
+    all_labels: set[str] = set()
     for filter, wk_df in zip(filtered_dfs, plot_df_list):
+        all_labels.update(wk_df[x_label])
         fig.add_trace(
             go.Bar(
                 x=wk_df[y_label],
@@ -429,9 +453,22 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
                 orientation="h",
             )
         )
+    num_rows = len(all_labels)
+    num_filters = len(filtered_dfs)
+    height_per_row = 20 + 5 * num_filters
+    inner_height = num_rows * height_per_row
+    margin_top = 35
+    margin_bottom = 20
+    margin_l = 60
+    margin_r = 0
+    height = inner_height + margin_top + margin_bottom
+    legend_y = 1 + margin_top / height
+    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
+        height=height,
+        margin=margin,
         legend_title_text="Filter",
-        legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+        legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
     return fig
 
