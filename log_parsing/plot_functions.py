@@ -258,6 +258,7 @@ def make_line_plot(
     x_axis_kwargs: dict | None = None,
     y_axis_kwargs: dict | None = None,
     layout_kwargs: dict | None = None,
+    title: str | None = None,
 ) -> go.Figure:
     plot_dfs = [plot_data_function(df.dataframe) for df in filter_dfs]
     fig = go.Figure()
@@ -276,6 +277,7 @@ def make_line_plot(
     if layout_kwargs is None:
         layout_kwargs = {}
     fig.update_layout(
+        title=title,
         legend_title_text="Filter",
         hovermode="x unified",
         legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
@@ -499,6 +501,7 @@ def make_time_of_day_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         "Time of day",
         "relative frequency",
         x_axis_kwargs={"tickformat": "%H:%M"},
+        # title="Time of day vs. relative frequency"
     )
 
 
@@ -508,16 +511,17 @@ def make_date_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         get_rolling_mean_1w,
         "date",
         "relative_counts",
+        # title="Date vs. relative frequency",
     )
 
 
 plot_functions: dict[str, Callable[[list[FilteredDataFrame]], go.Figure]] = {
-    "time_of_day": make_time_of_day_plot,
-    "date": make_date_plot,
-    "weekday": make_weekday_plot,
-    "page_popularity": make_page_popularity_plot,
-    "countries": make_country_plot,
-    "continent": make_continent_plot,
+    "Time of day": make_time_of_day_plot,
+    "Date": make_date_plot,
+    "Weekday": make_weekday_plot,
+    "Continents": make_continent_plot,
+    "Page popularity": make_page_popularity_plot,
+    "Most active countries": make_country_plot,
 }
 
 
