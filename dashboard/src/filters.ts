@@ -40,10 +40,12 @@ class MultiSelect extends FilterElement {
 
         this.container.classList.add("form-group", "multi-select-group")
         this.container.innerHTML = `
-      <select multiple id=${this.label}>
-        ${this.values.map((value) => `<option>${value}</option>`).join("")}
-      </select>
-    `
+        <div class="d-flex align-items-center w-100">
+          <select multiple id=${this.label}>
+            ${this.values.map((value) => `<option>${value}</option>`).join("")}
+          </select>
+        </div>
+      `
 
         this.container.addEventListener("change", () => {
             this.eventEmitter.emit("change", undefined)
@@ -51,14 +53,16 @@ class MultiSelect extends FilterElement {
     }
 
     public render(): void {
-        $(this.container).find("select").selectpicker({
-            liveSearch: true,
-            actionsBox: true,
-            header: this.label,
-            liveSearchNormalize: true,
-            noneSelectedText: `Select ${this.label}`,
-            width: "100%",
-        })
+        $(this.container)
+            .find("select")
+            .selectpicker({
+                liveSearch: true,
+                actionsBox: true,
+                header: this.label,
+                liveSearchNormalize: true,
+                noneSelectedText: `Select ${this.label}`,
+                width: "100%",
+            })
     }
 
     getValues(): string[] {
@@ -81,12 +85,12 @@ class DatePicker extends FilterElement {
         this.container.setAttribute("id", "datepicker")
 
         this.container.innerHTML = `
-        <div class="input-daterange input-group input-group-sm" id="datepicker">
-            <input type="text" class="form-control" name="start" />
+        <div class="input-daterange input-group input-group-extra-sm" id="datepicker">
+            <input type="text" class="form-control smaller-input-text" name="start" />
                 <div class="input-group-append input-group-prepend">
                     <span class="input-group-text">to</span>
                 </div>
-            <input type="text" class="form-control" name="end" />
+            <input type="text" class="form-control smaller-input-text" name="end" />
         </div>
         `
 
@@ -110,12 +114,14 @@ class DatePicker extends FilterElement {
             autoclose: true,
             clearBtn: true,
             keepEmptyValues: true,
-            weekStart: 1
+            weekStart: 1,
         })
         $(this.container).datepicker("update", [this.min_date, this.max_date])
-        $(this.container).datepicker().on("changeDate", () => {
-            this.eventEmitter.emit("change", undefined)
-        }) 
+        $(this.container)
+            .datepicker()
+            .on("changeDate", () => {
+                this.eventEmitter.emit("change", undefined)
+            })
     }
 
     getValues(): string[] {
@@ -130,11 +136,13 @@ class FilterRow {
     private eventEmitter: EventEmitter
     public deleteButton: HTMLButtonElement
     public index: number
+    private color!: string
+    private colorSquare!: HTMLElement
 
-    constructor(data: FilterOptionsInterface, index: number) {
+    constructor(data: FilterOptionsInterface, index: number, colors: string[]) {
         this.index = index
         this.row = document.createElement("div")
-        this.row.classList.add("filter-row")
+        this.row.classList.add("filter-row", "d-flex", "align-items-center", "mb-3")
 
         this.filters = {
             dateRange: new DatePicker(data.minDate, data.maxDate),
@@ -151,17 +159,35 @@ class FilterRow {
             this.delete()
         })
         this.row.appendChild(this.deleteButton)
+        this.colorSquare = this.createSquare()
+        this.updateColor(colors)
+        this.row.appendChild(this.colorSquare)
 
         this.eventEmitter = new EventEmitter()
 
         for (const key in this.filters) {
             const filter = this.filters[key]
-            // filter.container.addEventListener('change', this.sendData.bind(this))
             filter.on("change", () => {
                 this.eventEmitter.emit("change", undefined)
             })
             this.row.appendChild(filter.container)
         }
+    }
+
+    public updateColor(colors: string[]) {
+        this.color = colors[this.index]
+        this.colorSquare.style.backgroundColor = this.color
+    }
+
+    private createSquare(): HTMLElement {
+        const square = document.createElement("span")
+        square.textContent = " "
+        square.classList.add(
+            "badge", "badge-pill", "badge-primary"
+        )
+        square.style.width = "20px"
+        square.style.height = "20px"
+        return square
     }
 
     public getData(): { [key: string]: string[] } {
@@ -201,18 +227,17 @@ interface FilterOptionsInterface {
 }
 
 export class FilterContainer extends EventEmitter {
-    private filterOptions!: FilterOptionsInterface
-    private filterRowList!: FilterRow[]
-    private filterRowsContainer!: HTMLDivElement
-    private addFilterButton!: HTMLButtonElement
+    filterOptions!: FilterOptionsInterface
+    filterRowList!: FilterRow[]
+    filterRowsContainer!: HTMLDivElement
+    addFilterButton!: HTMLButtonElement
+    colors: string[] = []
 
     constructor(
         filterRowsContainer: HTMLDivElement,
         addFilterButton: HTMLButtonElement
     ) {
         super()
-        // const filterRowsContainer = document.querySelector<HTMLDivElement>('#filter-rows')
-        // const addFilterButton = document.querySelector<HTMLButtonElement>('#add-filter')
         if (!filterRowsContainer || !addFilterButton) {
             console.error("Could not find filter rows container or add filter button.")
             return
@@ -236,10 +261,22 @@ export class FilterContainer extends EventEmitter {
                 addFilterButton.disabled = false
             })
             .catch((error) => console.error(error))
+
+        fetch("/colors")
+            .then((response) => response.json())
+            .then((data) => {
+                this.colors = data
+                this.updateIndices()
+            })
+            .catch((error) => console.error(error))
     }
 
     private addFilter(): void {
-        const filterRow = new FilterRow(this.filterOptions, this.filterRowList.length)
+        const filterRow = new FilterRow(
+            this.filterOptions,
+            this.filterRowList.length,
+            this.colors
+        )
         this.filterRowList.push(filterRow)
         this.filterRowsContainer.appendChild(filterRow.row)
         filterRow.render()
@@ -261,6 +298,7 @@ export class FilterContainer extends EventEmitter {
     private updateIndices(): void {
         this.filterRowList.forEach((filterRow, index) => {
             filterRow.index = index
+            filterRow.updateColor(this.colors)
         })
     }
 

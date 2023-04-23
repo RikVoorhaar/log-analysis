@@ -1,9 +1,6 @@
 .filter-row {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: left;
+    flex-wrap: wrap;
     margin-bottom: 0px;
-    /* overflow-x: hidden; */
 }
 
 .filter-row .form-group,
@@ -20,9 +17,30 @@
     height: 24px !important;
 }
 
-.filter-row button {
+/* .filter-row .input-group .form-control:not(textarea) {
+    
+    height: calc(1em + 0.25rem + 2px);
+} */
+
+.input-group-extra-sm > .form-control,
+.input-group-extra-sm > .custom-select {
+  height: 24px; /* Adjust the height value according to your preferences */
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-size: 0.9rem;
+}
+
+.input-group-extra-sm > .input-group-prepend > .input-group-text,
+.input-group-extra-sm > .input-group-append > .input-group-text {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-size: 0.9rem; /* Adjust the font size value according to your preferences */
+}
+
+.filter-row button,
+.filter-row span.badge {
     padding: 0px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .filter-container {
@@ -66,7 +84,9 @@ input .form-control {
 .multi-select-group {
     min-width: 150px;
     max-width: 300px;
-    display: inline-block;
+    /* display: inline-block; */
+    /* display: flex;
+    align-items: center; */
+    margin-bottom: 0;
     white-space: nowrap;
 }
-

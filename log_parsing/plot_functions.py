@@ -50,7 +50,10 @@ class FilterModel(BaseModel):
         """Index is packet as list[str], but we just want a single int"""
         return int(v[0])
 
-    def to_filtered_data_frame(self, df: pl.DataFrame):
+    def to_filtered_data_frame(self, df: pl.DataFrame, colors: list[str] | None = None):
+        if colors is None:
+            colors = px.colors.qualitative.T10
+        color = colors[self.index % len(colors)]
         return FilteredDataFrame(
             df,
             date_start=self.dateRange[0],
@@ -59,6 +62,7 @@ class FilterModel(BaseModel):
             continents=self.continents,
             page_names=self.pageNames,
             index=self.index,
+            plot_color=color,
         )
 
 
@@ -72,6 +76,7 @@ class FilteredDataFrame:
         continents: list[str] | None = None,
         page_names: list[str] | None = None,
         index: int | None = None,
+        plot_color: str | None = None,
     ):
         if index is None:
             index = 0
@@ -81,6 +86,7 @@ class FilteredDataFrame:
         self.countries = countries
         self.continents = continents
         self.page_names = page_names
+        self.plot_color = plot_color
 
         self.dataframe = self._filter_df(df)
 
@@ -255,6 +261,7 @@ def make_line_plot(
                 y=plot_df[y_label],
                 name=filter.plot_number,
                 hovertemplate=r"%{y:.4f}<extra></extra>",
+                line=dict(color=filter.plot_color),
             )
         )
 
@@ -318,6 +325,7 @@ def make_weekday_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
                 y=wk_df[y_label],
                 name=filter.plot_number,
                 hovertemplate=r"%{y:.4f}<extra></extra>",
+                marker=dict(color=filter.plot_color),
             )
         )
     fig.update_layout(
@@ -356,6 +364,7 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
                 orientation="h",
                 name=filter.plot_number,
                 hovertemplate=r"%{x:.4f}<extra></extra>",
+                marker=dict(color=filter.plot_color),
             )
         )
     height_per_row = 20 + 5 * len(filtered_dfs)
@@ -405,8 +414,14 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     ).drop("_counts_max")
     top10 = joined[:10]
 
+    colors = [fdf.plot_color for fdf in filtered_dfs]
     fig = px.bar(
-        top10.to_pandas(), y="Country", x=plot_labels, barmode="group", orientation="h"
+        top10.to_pandas(),
+        y="Country",
+        x=plot_labels,
+        barmode="group",
+        orientation="h",
+        color_discrete_sequence=colors,
     )
     num_filters = len(filtered_dfs)
     num_rows = len(top10)
@@ -451,6 +466,7 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
                 name=filter.plot_number,
                 hovertemplate=r"%{x:.4f}<extra></extra>",
                 orientation="h",
+                marker=dict(color=filter.plot_color),
             )
         )
     num_rows = len(all_labels)

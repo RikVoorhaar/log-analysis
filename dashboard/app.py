@@ -1,10 +1,7 @@
 # %%
 from pathlib import Path
-from typing import Callable, Any
 
 import plotly.express as px
-import plotly.graph_objects as go
-import polars as pl
 from flask import Flask, jsonify, request, send_from_directory, make_response
 from pydantic import ValidationError, parse_obj_as
 
@@ -18,6 +15,8 @@ from log_parsing.plot_functions import (
 
 DIST = Path(__file__).parent / "dist"
 PUBLIC = Path(__file__).parent / "public"
+PLOT_COLOR_SCHEME = px.colors.qualitative.T10
+
 app = Flask(__name__, static_folder=PUBLIC)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
@@ -25,12 +24,6 @@ df = load_df_from_db(TableNames.PAGES_LOG)
 date_start = df["time"][0]
 date_end = df["time"][-1]
 
-colors = {
-    "background": "#FFFFFF",
-    "text": "#7FDBFF",
-}
-
-# fig = make_weekday_plot(filtered_dfs)
 
 filter_json = {
     "minDate": date_start.strftime("%Y-%m-%d"),
@@ -52,6 +45,11 @@ def return_filter_json():
     return jsonify(filter_json)
 
 
+@app.route("/colors", methods=["GET"])
+def return_colors():
+    return jsonify(PLOT_COLOR_SCHEME)
+
+
 @app.route("/filter-data/", methods=["GET", "POST"])
 def parse_filters():
     request_json = request.get_json()
@@ -61,7 +59,10 @@ def parse_filters():
         print("Invalid filter")
         print(request_json)
         return jsonify({"success": False})
-    filtered_dfs = [filter.to_filtered_data_frame(df) for filter in filter_list]
+    filtered_dfs = [
+        filter.to_filtered_data_frame(df, colors=PLOT_COLOR_SCHEME)
+        for filter in filter_list
+    ]
     filtered_dfs = [df for df in filtered_dfs if len(df.dataframe) > 0]
     if len(filtered_dfs) == 0:
         response = make_response(
