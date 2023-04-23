@@ -21,6 +21,19 @@ const PlotlyGraph: React.FC<PlotlyGraphProps> = ({ id, data, layout, config }) =
         updatePlot(data)
     }, [data])
 
-    return <Plot ref={plotRef} data={data} layout={layout} config={config}/>
+    const newConfig = {
+        ...config,
+        responsive: true,
+    }
+
+    return (
+        <Plot
+            ref={plotRef}
+            data={data}
+            layout={layout}
+            config={newConfig}
+            style={{ width: "100%" }}
+        />
+    )
 }
 export default PlotlyGraph

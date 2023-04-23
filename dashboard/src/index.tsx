@@ -15,7 +15,6 @@ class EmptyFilterError extends Error {
 const App = () => {
     const [plotIds, setPlotIds] = useState<string[]>([])
     const [plotsData, setPlotsData] = useState<{ [key: string]: any }>({})
-    // const [filterContainerHeight, setFilterContainerHeight] = useState<number>(0)
 
     useEffect(() => {
         fetch("/all-plots/")
@@ -70,40 +69,24 @@ const App = () => {
         updatePlots(data)
     }
 
-    // const handleResize = () => {
-    //     const filterContainer: HTMLDivElement | null =
-    //         document.querySelector(".filter-container")
-    //     if (filterContainer) {
-    //         const filterContainerHeight = filterContainer.offsetHeight
-    //         setFilterContainerHeight(filterContainerHeight)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     const plotContainer: HTMLDivElement = document.getElementById(
-    //         "plot-container"
-    //     ) as HTMLDivElement
-    //     if (plotContainer) {
-    //         plotContainer.style.paddingTop = `${filterContainerHeight}px`
-    //     }
-    // }, [filterContainerHeight])
-
     return (
-        <div className="app-container" data-bs-theme="dark">
-            <FilterContainerComponent
-                onFilterDataChange={handleFilterDataChange}
-                // onResize={handleResize}
-            />
-            <div id="plot-container">
-                {plotIds.map((id) => (
-                    <PlotlyGraph
-                        key={id}
-                        id={id}
-                        data={plotsData[id]?.data || []}
-                        layout={plotsData[id]?.layout || {}}
-                        config={plotsData[id]?.config || {}}
-                    />
-                ))}
+        <div className="app-container">
+            <FilterContainerComponent onFilterDataChange={handleFilterDataChange} />
+            <div className="container-fluid">
+                <div className="row justify-content-center">
+
+                    {plotIds.map((id) => (
+                        <div className="col col-12 col-md-12 col-lg-8 col-xl-6" key={id}>
+                            <PlotlyGraph
+                                key={id}
+                                id={id}
+                                data={plotsData[id]?.data || []}
+                                layout={plotsData[id]?.layout || {}}
+                                config={plotsData[id]?.config || {}}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

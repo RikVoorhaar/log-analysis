@@ -37,10 +37,17 @@
   font-size: 0.9rem; /* Adjust the font size value according to your preferences */
 }
 
-.filter-row button,
-.filter-row span.badge {
+.filter-row button {
     padding: 0px;
     margin-right: 5px;
+}
+
+.filter-row span.badge {
+    margin-right: 5px;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    text-shadow: 1px 1px 3px black;
 }
 
 .filter-container {

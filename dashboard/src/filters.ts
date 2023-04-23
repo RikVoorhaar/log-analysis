@@ -177,6 +177,7 @@ class FilterRow {
     public updateColor(colors: string[]) {
         this.color = colors[this.index]
         this.colorSquare.style.backgroundColor = this.color
+        this.colorSquare.textContent = (this.index+1).toString()
     }
 
     private createSquare(): HTMLElement {
@@ -288,11 +289,11 @@ export class FilterContainer extends EventEmitter {
             if (index !== -1) {
                 this.filterRowList.splice(index, 1)
             }
-            this.emitDataChangeEvent()
             this.emitResizeEvent()
+            this.emitDataChangeEvent()
         })
-        this.emitDataChangeEvent()
         this.emitResizeEvent()
+        this.emitDataChangeEvent()
     }
 
     private updateIndices(): void {

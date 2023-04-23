@@ -15,6 +15,13 @@ from log_parsing.parse_access_log import load_df_from_db
 
 IGNORED_PAGES = ["test", "users", "images"]
 IGNORE_PAGES_REGEX = r"^(" + "|".join(IGNORED_PAGES) + ")$"
+MARGINS = dict(margin_top=35, margin_bottom=20, margin_l=30, margin_r=0)
+GO_MARGIN = go.layout.Margin(
+    t=MARGINS["margin_top"],
+    b=MARGINS["margin_bottom"],
+    l=MARGINS["margin_l"],
+    r=MARGINS["margin_r"],
+)
 
 
 class FilterModel(BaseModel):
@@ -272,6 +279,7 @@ def make_line_plot(
         legend_title_text="Filter",
         hovermode="x unified",
         legend=dict(x=0, y=1.1, orientation="h", xanchor="left"),
+        height=450,
         **layout_kwargs,
     )
     if x_axis_kwargs is None:
@@ -279,7 +287,7 @@ def make_line_plot(
     fig.update_xaxes(title_text=x_label, **x_axis_kwargs)  # , tickformat="%H:%M")
     if y_axis_kwargs is None:
         y_axis_kwargs = {}
-    fig.update_yaxes(title_text=y_label, **y_axis_kwargs)
+    fig.update_yaxes(**y_axis_kwargs)
     return fig
 
 
@@ -375,16 +383,12 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     num_filters = len(filtered_dfs)
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
-    margin_top = 35
-    margin_bottom = 20
-    margin_l = 60
-    margin_r = 0
+    margin_top = MARGINS["margin_top"]
+    margin_bottom = MARGINS["margin_bottom"] 
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
-    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
         height=height,
-        margin=margin,
         legend_title_text="Filter",
         legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
@@ -423,20 +427,18 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         orientation="h",
         color_discrete_sequence=colors,
     )
+    fig.update_xaxes(title_text="")
+    fig.update_yaxes(title_text="")
     num_filters = len(filtered_dfs)
     num_rows = len(top10)
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
-    margin_top = 35
-    margin_bottom = 20
-    margin_l = 60
-    margin_r = 0
+    margin_top = MARGINS["margin_top"]
+    margin_bottom = MARGINS["margin_bottom"] 
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
-    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
         height=height,
-        margin=margin,
         legend_title_text="Filter",
         legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
@@ -473,16 +475,12 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     num_filters = len(filtered_dfs)
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
-    margin_top = 35
-    margin_bottom = 20
-    margin_l = 60
-    margin_r = 0
+    margin_top = MARGINS["margin_top"]
+    margin_bottom = MARGINS["margin_bottom"] 
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
-    margin = go.Margin(t=margin_top, b=margin_bottom, l=margin_l, r=margin_r)
     fig.update_layout(
         height=height,
-        margin=margin,
         legend_title_text="Filter",
         legend=dict(x=0, y=legend_y, orientation="h", xanchor="left"),
     )
@@ -521,6 +519,21 @@ plot_functions: dict[str, Callable[[list[FilteredDataFrame]], go.Figure]] = {
     "countries": make_country_plot,
     "continent": make_continent_plot,
 }
+
+
+def modify_layout(
+    plot_func: Callable[[list[FilteredDataFrame]], go.Figure]
+) -> Callable[[list[FilteredDataFrame]], go.Figure]:
+    def new_plot_func(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
+        fig = plot_func(filtered_dfs)
+        fig.update_layout(margin=GO_MARGIN)
+        return fig
+
+    return new_plot_func
+
+
+plot_functions = {name: modify_layout(func) for name, func in plot_functions.items()}
+
 
 if __name__ == "__main__":
     df = load_df_from_db(TableNames.PAGES_LOG)

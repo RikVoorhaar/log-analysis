@@ -2,6 +2,7 @@
 from pathlib import Path
 
 import plotly.express as px
+import plotly.graph_objects as go
 from flask import Flask, jsonify, request, send_from_directory, make_response
 from pydantic import ValidationError, parse_obj_as
 
@@ -77,12 +78,16 @@ def parse_filters():
         )
         return response
 
-    graphs: dict[str, str] = {
-        plot_id: plot_function(filtered_dfs).to_json()
+    graphs: dict[str, go.Figure] = {
+        plot_id: plot_function(filtered_dfs)
         for plot_id, plot_function in plot_functions.items()
     }
 
-    return jsonify(graphs)
+    graphs_json: dict[str, str] = {
+        plot_id: graph.to_json() for plot_id, graph in graphs.items()
+    }
+
+    return jsonify(graphs_json)
 
 
 @app.route("/")
