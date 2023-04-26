@@ -1,5 +1,7 @@
 # %%
 from pathlib import Path
+from time import perf_counter
+from functools import wraps
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -13,6 +15,7 @@ from log_parsing.plot_functions import (
     FilterModel,
     plot_functions,
 )
+from log_parsing.config import logger
 
 DIST = Path(__file__).parent / "dist"
 PUBLIC = Path(__file__).parent / "public"
@@ -22,8 +25,8 @@ app = Flask(__name__, static_folder=PUBLIC)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
 df = load_df_from_db(TableNames.PAGES_LOG)
-date_start = df["time"][0]
-date_end = df["time"][-1]
+date_start = df["time"].min()
+date_end = df["time"].max()
 
 
 filter_json = {
@@ -35,6 +38,29 @@ filter_json = {
 }
 
 
+def route_with_time_taken(rule, methods=None):
+    if methods is None:
+        methods = ["GET"]
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            time_before = perf_counter()
+            result = func(*args, **kwargs)
+            remote_addr = request.remote_addr
+            time_taken_ms = (perf_counter() - time_before) * 1000
+            logger.info(
+                f"request {rule} from {remote_addr} took {time_taken_ms:.2f} ms"
+            )
+            return result
+
+        app.add_url_rule(rule, func.__name__, wrapper, methods=methods)
+        return wrapper
+
+    return decorator
+
+
+# @route_with_time_taken("/all-plots/")
 @app.route("/all-plots/")
 def all_plot_ids():
     return jsonify(list(plot_functions.keys()))
@@ -51,7 +77,8 @@ def return_colors():
     return jsonify(PLOT_COLOR_SCHEME)
 
 
-@app.route("/filter-data/", methods=["GET", "POST"])
+# @app.route("/filter-data/", methods=["GET", "POST"])
+@route_with_time_taken("/filter-data/", methods=["GET", "POST"])
 def parse_filters():
     request_json = request.get_json()
     try:
@@ -66,6 +93,7 @@ def parse_filters():
     ]
     filtered_dfs = [df for df in filtered_dfs if len(df.dataframe) > 0]
     if len(filtered_dfs) == 0:
+        logger.info("All filters are empty")
         response = make_response(
             jsonify(
                 {
@@ -78,16 +106,14 @@ def parse_filters():
         )
         return response
 
-    graphs: dict[str, go.Figure] = {
-        plot_id: plot_function(filtered_dfs)
-        for plot_id, plot_function in plot_functions.items()
-    }
+    return_data = jsonify(
+        {
+            plot_id: plot_function(filtered_dfs).to_json()
+            for plot_id, plot_function in plot_functions.items()
+        }
+    )
 
-    graphs_json: dict[str, str] = {
-        plot_id: graph.to_json() for plot_id, graph in graphs.items()
-    }
-
-    return jsonify(graphs_json)
+    return return_data
 
 
 @app.route("/")
@@ -97,7 +123,6 @@ def index():
 
 @app.route("/dist/<path:path>")
 def dist(path):
-    print(path)
     return send_from_directory(DIST, path)
 
 

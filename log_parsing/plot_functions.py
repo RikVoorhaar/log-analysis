@@ -11,6 +11,7 @@ from pydantic import BaseModel, parse_obj_as, validator
 from scipy.ndimage import gaussian_filter1d
 
 from log_parsing.database_def import TableNames
+from log_parsing.config import logger
 from log_parsing.parse_access_log import load_df_from_db
 
 IGNORED_PAGES = ["test", "users", "images"]
@@ -224,14 +225,16 @@ def get_hour_minute_count(
 class GaussianFilterMode(Enum):
     WRAP = "wrap"
     REFLECT = "reflect"
-    MIRROR = "MIRROR"
+    MIRROR = "mirror"
 
 
 def make_filter_map(
     sigma: float, mode: GaussianFilterMode = GaussianFilterMode.REFLECT
 ):
     def gaussian_filter_map(x: pl.Series):
-        return pl.Series(gaussian_filter1d(x.cast(pl.Float32), sigma, mode=mode.value))
+        return pl.Series(
+            gaussian_filter1d(x.cast(pl.Float32).to_numpy(), sigma, mode=mode.value)
+        )
 
     return gaussian_filter_map
 
@@ -296,12 +299,13 @@ def make_line_plot(
 def get_rolling_mean_1w(df: pl.DataFrame) -> pl.DataFrame:
     x_label = "date"
     y_label = "relative_counts"
-    hour_count_df = compute_date_hour_count(df, frequency="6h")
+    hour_count_df = compute_date_hour_count(df, frequency="1h")
     rolling_sum = hour_count_df.select(
         pl.col("time").alias(x_label),  # .dt.strftime(r"%Y/%m/%d"),
         pl.col("counts")
         .rolling_mean(window_size="1w", closed="none", by="time")
-        .map(make_filter_map(5, GaussianFilterMode.REFLECT))
+        .fill_null(0)
+        .map(make_filter_map(20, GaussianFilterMode.WRAP))
         .alias(y_label)
         / len(df),
     )
@@ -386,7 +390,7 @@ def make_page_popularity_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figur
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
     margin_top = MARGINS["margin_top"]
-    margin_bottom = MARGINS["margin_bottom"] 
+    margin_bottom = MARGINS["margin_bottom"]
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
     fig.update_layout(
@@ -436,7 +440,7 @@ def make_country_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
     margin_top = MARGINS["margin_top"]
-    margin_bottom = MARGINS["margin_bottom"] 
+    margin_bottom = MARGINS["margin_bottom"]
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
     fig.update_layout(
@@ -478,7 +482,7 @@ def make_continent_plot(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
     height_per_row = 20 + 5 * num_filters
     inner_height = num_rows * height_per_row
     margin_top = MARGINS["margin_top"]
-    margin_bottom = MARGINS["margin_bottom"] 
+    margin_bottom = MARGINS["margin_bottom"]
     height = inner_height + margin_top + margin_bottom
     legend_y = 1 + margin_top / height
     fig.update_layout(
@@ -552,13 +556,3 @@ if __name__ == "__main__":
 
     for plot_function in plot_functions.values():
         plot_function(filtered_dfs).show()
-
-
-# %%
-
-weekday_df = pl.DataFrame({"weekday": [4, 5], "counts": [1, 1]})
-print(len(weekday_df))
-weekday_all = pl.DataFrame({"weekday": np.arange(7) + 1})
-weekday_all.join(weekday_df, on="weekday", how="left").fill_null(0)
-
-# filtered_dfs[0].dataframe["weekday"].value_counts().sort(by="weekday")

@@ -12,8 +12,8 @@ Everything sees to work now. Here's a todo:
 <!-- - Colors need to be consistent; each filter has an index, and color should be tied to index. We should be able to see the color in a preview in the filter row. This also means that we can remove the label in the plots; we just number them.  -->
 <!-- - add colors to filter list -->
 <!-- - Make it impossible to delete the last filter -->
-- add logging and timing
-- The date plot seems to be missing the first/last couple days
+<!-- - add logging and timing -->
+<!-- - The date plot seems to be missing the first/last couple days -->
 
 
 

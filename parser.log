@@ -2154,3 +2154,163 @@ NameError: name 'date_start' is not defined
     Logger initialized
 2023-04-23 16:34:42,325 | geolocation | INFO
     Geolite database already downloaded. Skipping download.
+2023-04-26 20:02:50,632 | config | INFO
+    Logger initialized
+2023-04-26 20:02:50,762 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:03:20,029 | config | INFO
+    Logger initialized
+2023-04-26 20:03:20,147 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:04:09,321 | config | INFO
+    Logger initialized
+2023-04-26 20:04:09,432 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:04:13,140 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 994.54 ms
+2023-04-26 20:04:19,722 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 250.15 ms
+2023-04-26 20:04:32,190 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 256.06 ms
+2023-04-26 20:04:34,788 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 272.89 ms
+2023-04-26 20:04:36,786 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 261.31 ms
+2023-04-26 20:04:38,819 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 237.84 ms
+2023-04-26 20:05:35,150 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 339.11 ms
+2023-04-26 20:05:37,351 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 271.48 ms
+2023-04-26 20:07:47,003 | config | INFO
+    Logger initialized
+2023-04-26 20:07:47,141 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:08:25,148 | config | INFO
+    Logger initialized
+2023-04-26 20:08:25,258 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:08:27,420 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 906.01 ms
+2023-04-26 20:09:01,151 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 239.84 ms
+2023-04-26 20:09:13,855 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 200.21 ms
+2023-04-26 20:09:16,499 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 213.63 ms
+2023-04-26 20:09:45,763 | config | INFO
+    Logger initialized
+2023-04-26 20:09:45,884 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:10:32,099 | config | INFO
+    Logger initialized
+2023-04-26 20:10:32,211 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:10:43,376 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 912.49 ms
+2023-04-26 20:10:50,538 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 209.78 ms
+2023-04-26 20:10:54,075 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 201.66 ms
+2023-04-26 20:10:59,079 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 225.30 ms
+2023-04-26 20:12:21,937 | config | INFO
+    Logger initialized
+2023-04-26 20:12:22,068 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:12:24,027 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 937.01 ms
+2023-04-26 20:12:39,390 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 224.37 ms
+2023-04-26 20:12:42,868 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 214.38 ms
+2023-04-26 20:12:44,726 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 210.42 ms
+2023-04-26 20:15:42,140 | config | INFO
+    Logger initialized
+2023-04-26 20:15:42,256 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:15:44,575 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 895.96 ms
+2023-04-26 20:15:54,851 | config | INFO
+    Logger initialized
+2023-04-26 20:15:54,963 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:15:58,278 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 929.73 ms
+2023-04-26 20:16:11,916 | config | INFO
+    Logger initialized
+2023-04-26 20:16:12,028 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:16:14,609 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 896.30 ms
+2023-04-26 20:17:27,223 | config | INFO
+    Logger initialized
+2023-04-26 20:17:27,352 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:17:29,501 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 924.93 ms
+2023-04-26 20:17:42,383 | config | INFO
+    Logger initialized
+2023-04-26 20:17:42,502 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:17:45,114 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 918.08 ms
+2023-04-26 20:18:08,460 | config | INFO
+    Logger initialized
+2023-04-26 20:18:08,579 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:18:10,917 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 925.45 ms
+2023-04-26 20:18:24,916 | config | INFO
+    Logger initialized
+2023-04-26 20:18:25,025 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:18:27,217 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 922.49 ms
+2023-04-26 20:20:15,062 | config | INFO
+    Logger initialized
+2023-04-26 20:20:15,188 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:20:18,675 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 950.75 ms
+2023-04-26 20:20:23,635 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 237.43 ms
+2023-04-26 20:20:34,634 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 225.13 ms
+2023-04-26 20:20:41,996 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 233.97 ms
+2023-04-26 20:20:42,312 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 339.64 ms
+2023-04-26 20:20:42,804 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 301.43 ms
+2023-04-26 20:20:43,230 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 493.07 ms
+2023-04-26 20:20:43,612 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 474.81 ms
+2023-04-26 20:21:15,031 | config | INFO
+    Logger initialized
+2023-04-26 20:21:15,157 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:21:35,975 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 17470.08 ms
+2023-04-26 20:23:51,344 | config | INFO
+    Logger initialized
+2023-04-26 20:23:51,458 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:24:36,401 | config | INFO
+    Logger initialized
+2023-04-26 20:24:36,512 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:25:03,104 | config | INFO
+    Logger initialized
+2023-04-26 20:25:03,214 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:26:00,715 | config | INFO
+    Logger initialized
+2023-04-26 20:26:00,857 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-26 20:26:03,629 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 929.51 ms
+2023-04-26 20:26:17,811 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 251.68 ms
