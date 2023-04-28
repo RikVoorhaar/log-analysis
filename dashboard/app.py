@@ -91,6 +91,7 @@ def parse_filters():
         filter.to_filtered_data_frame(df, colors=PLOT_COLOR_SCHEME)
         for filter in filter_list
     ]
+    filter_lengths = [len(df.dataframe) for df in filtered_dfs]
     filtered_dfs = [df for df in filtered_dfs if len(df.dataframe) > 0]
     if len(filtered_dfs) == 0:
         logger.info("All filters are empty")
@@ -106,10 +107,20 @@ def parse_filters():
         )
         return response
 
+    # return_data = jsonify(
+    #     {
+    #         plot_id: plot_function(filtered_dfs).to_json()
+    #         for plot_id, plot_function in plot_functions.items()
+    #     }
+    # )
+
     return_data = jsonify(
         {
-            plot_id: plot_function(filtered_dfs).to_json()
-            for plot_id, plot_function in plot_functions.items()
+            "plots": {
+                plot_id: plot_function(filtered_dfs).to_json()
+                for plot_id, plot_function in plot_functions.items()
+            },
+            "filters": filter_lengths,
         }
     )
 

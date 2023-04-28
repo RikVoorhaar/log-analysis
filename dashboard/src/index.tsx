@@ -12,9 +12,23 @@ class EmptyFilterError extends Error {
     }
 }
 
+interface PlotlyData {
+    data: any
+    layout: any
+    config: any
+}
+
+interface FilterDataResponse {
+    plots: {
+        [key: string]: string
+    }
+    filters: number[]
+}
+
 const App = () => {
     const [plotIds, setPlotIds] = useState<string[]>([])
-    const [plotsData, setPlotsData] = useState<{ [key: string]: any }>({})
+    const [plotsData, setPlotsData] = useState<{ [key: string]: PlotlyData }>({})
+    const [filterLengths, setFilterLengths] = useState<number[]>([])
 
     useEffect(() => {
         fetch("/all-plots/")
@@ -41,20 +55,23 @@ const App = () => {
                         }
                     })
                 }
-                return response.json()
+                return response.json() as Promise<FilterDataResponse>
             })
-            .then((rawData: Record<string, string>) => {
-                const parsedData = Object.entries(rawData).reduce(
+            .then((response: FilterDataResponse) => {
+                const parsedData = Object.entries(response.plots).reduce<
+                    Record<string, PlotlyData>
+                >(
                     (
                         acc: Record<string, any>,
                         [plotId, jsonString]: [string, string]
                     ) => {
-                        acc[plotId] = JSON.parse(jsonString)
+                        acc[plotId] = JSON.parse(jsonString) as PlotlyData
                         return acc
                     },
                     {}
                 )
                 setPlotsData(parsedData)
+                setFilterLengths(response.filters)
             })
             .catch((err) => {
                 if (err instanceof EmptyFilterError) {
@@ -71,12 +88,17 @@ const App = () => {
 
     return (
         <div className="app-container">
-            <FilterContainerComponent onFilterDataChange={handleFilterDataChange} />
+            <FilterContainerComponent
+                onFilterDataChange={handleFilterDataChange}
+                filterLengths={filterLengths}
+            />
             <div className="container-fluid">
                 <div className="row justify-content-center">
-
                     {plotIds.map((id) => (
-                        <div className="col col-12 col-md-12 col-lg-8 col-xl-6" key={id}>
+                        <div
+                            className="col col-12 col-md-12 col-lg-8 col-xl-6"
+                            key={id}
+                        >
                             <PlotlyGraph
                                 key={id}
                                 id={id}

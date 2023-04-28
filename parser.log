@@ -2314,3 +2314,177 @@ NameError: name 'date_start' is not defined
     request /filter-data/ from 127.0.0.1 took 929.51 ms
 2023-04-26 20:26:17,811 | app | INFO
     request /filter-data/ from 127.0.0.1 took 251.68 ms
+2023-04-28 19:43:39,082 | config | INFO
+    Logger initialized
+2023-04-28 19:43:39,223 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-28 19:43:43,903 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 1119.83 ms
+2023-04-28 19:44:56,564 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 226.62 ms
+2023-04-28 19:45:17,116 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 210.76 ms
+2023-04-28 19:45:20,404 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 263.40 ms
+2023-04-28 19:45:22,405 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 225.51 ms
+2023-04-28 19:45:24,019 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 253.54 ms
+2023-04-28 19:45:25,988 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 227.71 ms
+2023-04-28 19:45:45,605 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 248.47 ms
+2023-04-28 19:46:17,278 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 232.57 ms
+2023-04-28 19:46:19,023 | app | INFO
+    All filters are empty
+2023-04-28 19:46:19,023 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 2.55 ms
+2023-04-28 19:46:27,990 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 285.28 ms
+2023-04-28 19:46:31,144 | app | INFO
+    All filters are empty
+2023-04-28 19:46:31,144 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 2.43 ms
+2023-04-28 20:05:40,536 | config | INFO
+    Logger initialized
+2023-04-28 20:05:40,654 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-28 20:05:50,490 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 956.15 ms
+2023-04-28 20:09:54,715 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 228.72 ms
+2023-04-28 20:09:58,522 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 268.90 ms
+2023-04-28 20:10:00,943 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 262.32 ms
+2023-04-28 20:10:02,810 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 220.56 ms
+2023-04-28 20:10:04,682 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 252.28 ms
+2023-04-28 20:10:05,461 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 275.32 ms
+2023-04-28 20:10:12,115 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 238.62 ms
+2023-04-28 20:10:18,152 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 229.25 ms
+2023-04-28 20:10:22,665 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 258.21 ms
+2023-04-28 20:10:25,038 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 319.98 ms
+2023-04-28 20:10:27,067 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 215.16 ms
+2023-04-28 20:10:31,406 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 238.56 ms
+2023-04-28 20:10:36,881 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 214.74 ms
+2023-04-28 20:10:44,900 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 261.05 ms
+2023-04-28 20:10:52,450 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 235.57 ms
+2023-04-28 20:10:53,635 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 245.65 ms
+2023-04-28 20:10:55,159 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 233.88 ms
+2023-04-28 20:10:56,237 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 239.69 ms
+2023-04-28 20:10:57,295 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 236.27 ms
+2023-04-28 20:11:00,467 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.54 ms
+2023-04-28 20:11:01,544 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 249.95 ms
+2023-04-28 20:11:02,615 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.87 ms
+2023-04-28 20:11:05,491 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 243.60 ms
+2023-04-28 20:11:06,803 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 268.95 ms
+2023-04-28 20:11:07,698 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 282.34 ms
+2023-04-28 20:11:09,110 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 238.83 ms
+2023-04-28 20:11:10,134 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.56 ms
+2023-04-28 20:11:11,392 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 262.30 ms
+2023-04-28 20:11:12,835 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 247.93 ms
+2023-04-28 20:18:20,761 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 237.41 ms
+2023-04-28 20:18:23,417 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.50 ms
+2023-04-28 20:18:51,131 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 280.94 ms
+2023-04-28 20:18:59,398 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 273.25 ms
+2023-04-28 20:19:36,516 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 230.60 ms
+2023-04-28 20:19:46,424 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 225.34 ms
+2023-04-28 20:20:31,286 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 212.50 ms
+2023-04-28 20:20:44,162 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 240.39 ms
+2023-04-28 20:20:51,695 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 244.58 ms
+2023-04-28 20:20:57,533 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.42 ms
+2023-04-28 20:26:47,610 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 225.40 ms
+2023-04-28 20:26:51,396 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 224.37 ms
+2023-04-28 20:27:19,202 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 213.63 ms
+2023-04-28 20:27:21,930 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 218.99 ms
+2023-04-28 20:27:25,839 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 252.92 ms
+2023-04-28 20:28:56,253 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 239.89 ms
+2023-04-28 20:31:09,226 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 218.16 ms
+2023-04-28 20:32:53,192 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 261.01 ms
+2023-04-28 20:32:55,146 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 257.03 ms
+2023-04-28 20:33:41,200 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 237.25 ms
+2023-04-28 20:34:03,299 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 224.49 ms
+2023-04-28 20:34:05,199 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 258.64 ms
+2023-04-28 20:34:10,684 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 216.89 ms
+2023-04-28 20:34:11,934 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 275.64 ms
+2023-04-28 20:34:14,953 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 239.31 ms
+2023-04-28 20:34:17,862 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 247.31 ms
+2023-04-28 20:34:40,716 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 247.42 ms
+2023-04-28 20:34:43,175 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 247.11 ms
+2023-04-28 20:34:48,889 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 257.05 ms
+2023-04-28 20:34:51,022 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 223.32 ms
+2023-04-28 20:34:55,489 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 256.03 ms
+2023-04-28 20:35:01,827 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 273.03 ms
+2023-04-28 20:35:03,595 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 200.62 ms
+2023-04-28 20:36:36,414 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 250.39 ms
+2023-04-28 20:36:38,708 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 269.47 ms
+2023-04-28 20:36:40,926 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 259.36 ms
+2023-04-28 20:36:42,704 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 219.47 ms
+2023-04-28 20:36:44,715 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 231.55 ms
+2023-04-28 20:36:47,486 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 246.80 ms

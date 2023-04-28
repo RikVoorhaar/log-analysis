@@ -138,6 +138,7 @@ class FilterRow {
     public index: number
     private color!: string
     private colorSquare!: HTMLElement
+    private countAlert!: HTMLDivElement
 
     constructor(data: FilterOptionsInterface, index: number, colors: string[]) {
         this.index = index
@@ -172,23 +173,45 @@ class FilterRow {
             })
             this.row.appendChild(filter.container)
         }
+
+        this.countAlert = this.createCountAlert()
+        this.updateCount(0)
+        this.row.appendChild(this.countAlert)
     }
 
     public updateColor(colors: string[]) {
         this.color = colors[this.index]
         this.colorSquare.style.backgroundColor = this.color
-        this.colorSquare.textContent = (this.index+1).toString()
+        this.colorSquare.textContent = (this.index + 1).toString()
     }
 
     private createSquare(): HTMLElement {
         const square = document.createElement("span")
         square.textContent = " "
-        square.classList.add(
-            "badge", "badge-pill", "badge-primary"
-        )
+        square.classList.add("badge", "badge-pill", "badge-primary")
         square.style.width = "20px"
         square.style.height = "20px"
         return square
+    }
+
+    private createCountAlert(): HTMLDivElement {
+        const counter = document.createElement("div")
+        counter.role = "alert"
+        counter.classList.add("alert", "alert-primary")
+        return counter
+    }
+
+    public updateCount(count: number): void {
+        if (this.countAlert) {
+            this.countAlert.textContent = count.toString() + " hits"
+        }
+        this.countAlert.classList.remove("alert-primary", "alert-danger")
+
+        if (count === 0) {
+            this.countAlert.classList.add("alert-danger")
+        } else {
+            this.countAlert.classList.add("alert-primary")
+        }
     }
 
     public getData(): { [key: string]: string[] } {
@@ -332,5 +355,11 @@ export class FilterContainer extends EventEmitter {
         }
         this.updateIndices()
         this.emit("containerResize")
+    }
+
+    public updateFilterLengths(filterLengths: number[]): void {
+        filterLengths.forEach((length, index) => {
+            this.filterRowList[index].updateCount(length)
+        })
     }
 }

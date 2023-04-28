@@ -3,12 +3,12 @@ import { FilterContainer } from "./filters"
 
 interface FilterContainerComponentProps {
     onFilterDataChange: (data: any) => void
-    // onResize: () => void
+    filterLengths: number[]
 }
 
 const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
     onFilterDataChange,
-    // onResize,
+    filterLengths,
 }) => {
     const filterRowsContainerRef = useRef<HTMLDivElement>(null)
     const addFilterButtonRef = useRef<HTMLButtonElement>(null)
@@ -49,6 +49,15 @@ const FilterContainerComponent: React.FC<FilterContainerComponentProps> = ({
             }
         }
     }, []) // Add an empty dependency array
+
+    useEffect(() => {
+        const handleFilterLengthsChange = () => {
+            if (filterContainerRef.current) {
+                filterContainerRef.current.updateFilterLengths(filterLengths)
+            }
+        }
+        handleFilterLengthsChange()
+    }, [filterLengths])
 
     const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
         if (e.propertyName === "max-height") {
