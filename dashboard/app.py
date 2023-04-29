@@ -1,10 +1,9 @@
-# %%
 from pathlib import Path
+import logging
 from time import perf_counter
 from functools import wraps
 
 import plotly.express as px
-import plotly.graph_objects as go
 from flask import Flask, jsonify, request, send_from_directory, make_response
 from pydantic import ValidationError, parse_obj_as
 
@@ -17,12 +16,16 @@ from log_parsing.plot_functions import (
 )
 from log_parsing.config import logger
 
+
 DIST = Path(__file__).parent / "dist"
 PUBLIC = Path(__file__).parent / "public"
 PLOT_COLOR_SCHEME = px.colors.qualitative.T10
 
+
 app = Flask(__name__, static_folder=PUBLIC)
-app.config["PROPAGATE_EXCEPTIONS"] = True
+app.testing = True
+app.debug = True
+app.logger.setLevel(logging.DEBUG)
 
 df = load_df_from_db(TableNames.PAGES_LOG)
 date_start = df["time"].min()
@@ -107,13 +110,6 @@ def parse_filters():
         )
         return response
 
-    # return_data = jsonify(
-    #     {
-    #         plot_id: plot_function(filtered_dfs).to_json()
-    #         for plot_id, plot_function in plot_functions.items()
-    #     }
-    # )
-
     return_data = jsonify(
         {
             "plots": {
@@ -138,4 +134,4 @@ def dist(path):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=8080)
