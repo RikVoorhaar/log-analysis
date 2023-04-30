@@ -4273,3 +4273,365 @@ ValueError: You need to install pyarrow first
     Geolite database already downloaded. Skipping download.
 2023-04-29 16:54:43,821 | app | INFO
     request /filter-data/ from 172.18.0.1 took 732.27 ms
+2023-04-29 18:22:57,698 | config | INFO
+    Logger initialized
+2023-04-29 18:22:57,759 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:22:58,475 | config | INFO
+    Logger initialized
+2023-04-29 18:22:58,534 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:23:03,992 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 494.89 ms
+2023-04-29 18:23:41,368 | config | INFO
+    Logger initialized
+2023-04-29 18:23:41,428 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:23:42,113 | config | INFO
+    Logger initialized
+2023-04-29 18:23:42,171 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:23:56,154 | config | INFO
+    Logger initialized
+2023-04-29 18:23:56,214 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:23:56,881 | config | INFO
+    Logger initialized
+2023-04-29 18:23:56,938 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:24:11,728 | config | INFO
+    Logger initialized
+2023-04-29 18:24:11,792 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:24:12,477 | config | INFO
+    Logger initialized
+2023-04-29 18:24:12,537 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:24:25,797 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 418.31 ms
+2023-04-29 18:25:14,672 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 117.07 ms
+2023-04-29 18:31:48,167 | config | INFO
+    Logger initialized
+2023-04-29 18:31:48,238 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:31:48,976 | config | INFO
+    Logger initialized
+2023-04-29 18:31:49,037 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-29 18:31:51,150 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 450.91 ms
+2023-04-29 18:31:54,162 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 113.66 ms
+2023-04-29 18:31:56,857 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 97.36 ms
+2023-04-29 18:32:24,266 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.94 ms
+2023-04-29 18:32:39,203 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 119.76 ms
+2023-04-29 18:32:47,468 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 110.95 ms
+2023-04-29 18:33:56,162 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 86.19 ms
+2023-04-29 18:41:12,419 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.90 ms
+2023-04-29 18:41:15,588 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 112.42 ms
+2023-04-29 18:41:22,954 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 150.49 ms
+2023-04-29 18:44:30,272 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 97.01 ms
+2023-04-29 18:45:51,218 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 92.89 ms
+2023-04-29 18:46:03,641 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 112.16 ms
+2023-04-29 18:47:09,360 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 95.21 ms
+2023-04-29 18:48:22,224 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 106.23 ms
+2023-04-29 18:48:26,405 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 87.01 ms
+2023-04-29 18:48:37,660 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 98.85 ms
+2023-04-29 18:48:38,860 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 99.91 ms
+2023-04-29 18:49:26,958 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 121.76 ms
+2023-04-29 18:49:31,208 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 96.65 ms
+2023-04-29 18:51:41,728 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 112.19 ms
+2023-04-29 18:51:45,022 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 118.00 ms
+2023-04-29 18:51:48,758 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 103.00 ms
+2023-04-29 18:52:13,496 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 100.29 ms
+2023-04-29 18:52:58,336 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 113.30 ms
+2023-04-29 18:53:06,416 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 108.65 ms
+2023-04-29 18:53:07,550 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 100.58 ms
+2023-04-29 18:53:10,419 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 102.06 ms
+2023-04-29 18:53:11,336 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 104.73 ms
+2023-04-29 18:53:38,606 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 108.51 ms
+2023-04-29 18:53:47,749 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 91.00 ms
+2023-04-29 18:55:05,216 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.99 ms
+2023-04-29 18:55:10,367 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 96.21 ms
+2023-04-29 18:55:12,676 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.13 ms
+2023-04-29 18:55:14,064 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 99.67 ms
+2023-04-29 18:55:22,257 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 131.75 ms
+2023-04-29 18:55:25,854 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 99.72 ms
+2023-04-29 18:55:27,317 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.69 ms
+2023-04-29 18:55:38,890 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 102.66 ms
+2023-04-29 18:55:43,600 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 96.41 ms
+2023-04-29 18:55:45,032 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.52 ms
+2023-04-29 18:55:52,211 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.33 ms
+2023-04-29 18:55:53,204 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 98.56 ms
+2023-04-29 18:56:01,658 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 114.23 ms
+2023-04-29 18:56:02,632 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.69 ms
+2023-04-29 18:56:04,001 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 96.86 ms
+2023-04-29 18:56:04,808 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 113.32 ms
+2023-04-29 18:56:16,162 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 118.17 ms
+2023-04-29 18:56:18,902 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 107.27 ms
+2023-04-29 18:56:20,742 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.57 ms
+2023-04-29 18:56:24,029 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 107.02 ms
+2023-04-29 18:56:25,367 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.29 ms
+2023-04-29 18:56:26,512 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.18 ms
+2023-04-29 18:56:27,412 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 102.55 ms
+2023-04-29 18:56:28,382 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 90.00 ms
+2023-04-29 18:56:48,515 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 105.88 ms
+2023-04-29 18:56:55,058 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 118.89 ms
+2023-04-29 18:56:57,035 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 111.17 ms
+2023-04-29 18:56:59,542 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 99.34 ms
+2023-04-29 18:57:02,238 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 107.07 ms
+2023-04-29 18:57:24,479 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 102.24 ms
+2023-04-30 07:27:31,171 | config | INFO
+    Logger initialized
+2023-04-30 07:27:31,265 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 07:27:32,057 | config | INFO
+    Logger initialized
+2023-04-30 07:27:32,113 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 07:27:34,123 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 624.94 ms
+2023-04-30 07:27:37,365 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 110.87 ms
+2023-04-30 07:27:40,247 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 107.33 ms
+2023-04-30 07:27:42,663 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 95.96 ms
+2023-04-30 07:27:47,683 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 100.61 ms
+2023-04-30 07:27:51,267 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 113.39 ms
+2023-04-30 07:27:53,575 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 104.07 ms
+2023-04-30 07:28:28,146 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 90.46 ms
+2023-04-30 07:28:33,695 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 92.78 ms
+2023-04-30 07:28:35,372 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 157.37 ms
+2023-04-30 07:28:36,206 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 108.41 ms
+2023-04-30 07:28:44,645 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 104.01 ms
+2023-04-30 07:28:46,145 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 101.34 ms
+2023-04-30 07:28:51,930 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 94.54 ms
+2023-04-30 07:29:00,132 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 103.74 ms
+2023-04-30 07:29:05,902 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 95.67 ms
+2023-04-30 07:29:08,203 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 99.11 ms
+2023-04-30 07:29:10,881 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 103.43 ms
+2023-04-30 07:38:50,961 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 116.36 ms
+2023-04-30 07:45:22,152 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 116.46 ms
+2023-04-30 08:20:45,104 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 106.14 ms
+2023-04-30 08:21:35,511 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 116.24 ms
+2023-04-30 08:25:03,831 | config | INFO
+    Logger initialized
+2023-04-30 08:25:03,894 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 08:25:13,096 | config | INFO
+    Logger initialized
+2023-04-30 08:25:13,152 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 08:25:21,544 | config | INFO
+    Logger initialized
+2023-04-30 08:25:21,609 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 08:25:22,283 | config | INFO
+    Logger initialized
+2023-04-30 08:25:22,344 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 08:25:24,052 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 463.99 ms
+2023-04-30 08:25:26,719 | app | INFO
+    request /filter-data/ from 172.18.0.1 took 106.10 ms
+2023-04-30 10:25:58,191 | config | INFO
+    Logger initialized
+2023-04-30 10:25:58,244 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 10:26:04,481 | config | INFO
+    Logger initialized
+2023-04-30 10:26:04,520 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 10:26:05,274 | config | INFO
+    Logger initialized
+2023-04-30 10:26:05,307 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 10:26:07,928 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 598.87 ms
+2023-04-30 10:26:14,067 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 99.65 ms
+2023-04-30 10:27:37,074 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 124.86 ms
+2023-04-30 10:27:38,384 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 103.60 ms
+2023-04-30 10:27:42,690 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 89.21 ms
+2023-04-30 10:28:26,003 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 157.55 ms
+2023-04-30 10:28:52,601 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 108.13 ms
+2023-04-30 10:28:54,809 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 105.78 ms
+2023-04-30 10:29:25,268 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 84.49 ms
+2023-04-30 10:29:31,778 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 106.14 ms
+2023-04-30 10:30:15,679 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 113.99 ms
+2023-04-30 10:30:57,330 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 93.42 ms
+2023-04-30 10:34:35,474 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 100.76 ms
+2023-04-30 10:34:39,433 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 117.99 ms
+2023-04-30 10:34:41,687 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 100.07 ms
+2023-04-30 10:34:43,202 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 116.50 ms
+2023-04-30 10:34:45,591 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 124.74 ms
+2023-04-30 10:34:47,051 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 86.42 ms
+2023-04-30 10:34:48,829 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 95.01 ms
+2023-04-30 10:34:49,814 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 96.86 ms
+2023-04-30 10:34:52,224 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 98.49 ms
+2023-04-30 10:34:54,075 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 93.21 ms
+2023-04-30 10:34:55,043 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 98.03 ms
+2023-04-30 10:34:56,206 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 92.33 ms
+2023-04-30 10:34:57,801 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 96.53 ms
+2023-04-30 10:35:02,634 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 79.17 ms
+2023-04-30 10:35:04,200 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 90.81 ms
+2023-04-30 10:35:06,170 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 93.82 ms
+2023-04-30 10:35:51,913 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 90.00 ms
+2023-04-30 10:38:03,503 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 90.89 ms
+2023-04-30 10:38:10,488 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 102.39 ms
+2023-04-30 10:38:17,016 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 93.57 ms
+2023-04-30 10:38:20,947 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 90.88 ms
+2023-04-30 10:38:24,054 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 110.04 ms
+2023-04-30 10:38:26,570 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 105.24 ms
+2023-04-30 10:38:39,483 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 99.33 ms
+2023-04-30 10:38:43,523 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 89.87 ms
+2023-04-30 10:38:45,411 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 109.21 ms
+2023-04-30 10:38:45,995 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 95.16 ms
+2023-04-30 10:38:46,518 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 106.00 ms
+2023-04-30 10:38:49,248 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 115.08 ms
+2023-04-30 10:38:53,421 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 118.26 ms
+2023-04-30 10:39:23,337 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 91.49 ms
+2023-04-30 10:39:37,021 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 94.62 ms
+2023-04-30 10:39:39,384 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 84.88 ms
+2023-04-30 10:39:40,913 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 90.13 ms
+2023-04-30 10:39:42,103 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 109.73 ms
+2023-04-30 10:39:42,719 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 135.90 ms
+2023-04-30 10:39:44,425 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 122.06 ms
+2023-04-30 10:39:45,025 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 125.47 ms
+2023-04-30 10:39:47,695 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 99.68 ms
+2023-04-30 10:39:53,354 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 94.18 ms
+2023-04-30 10:39:53,747 | app | INFO
+    All filters are empty
+2023-04-30 10:39:53,747 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 1.77 ms
+2023-04-30 10:39:57,647 | app | INFO
+    request /filter-data/ from 127.0.0.1 took 85.06 ms

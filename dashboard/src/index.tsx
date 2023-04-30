@@ -93,7 +93,9 @@ const App = () => {
                 filterLengths={filterLengths}
             />
             <div className="container-fluid">
-                <div className="row justify-content-center">
+                <div 
+                 className="row justify-content-center"
+                >
                     {plotIds.map((id) => (
                         <div
                             className="col col-12 col-md-12 col-lg-8 col-xl-6"

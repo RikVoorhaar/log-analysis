@@ -9,6 +9,7 @@ interface PlotlyGraphProps {
 }
 
 const PlotlyGraph: React.FC<PlotlyGraphProps> = ({ id, data, layout, config }) => {
+    const containerRef = useRef<HTMLDivElement>(null)
     const plotRef = useRef<Plot>(null)
 
     const updatePlot = (newData: any) => {
@@ -23,18 +24,19 @@ const PlotlyGraph: React.FC<PlotlyGraphProps> = ({ id, data, layout, config }) =
 
     const newConfig = {
         ...config,
-        responsive: true,
     }
 
+
     return (
-        <div>
+        <div ref={containerRef}>
             <h3>{id}</h3>
             <Plot
                 ref={plotRef}
                 data={data}
                 layout={layout}
                 config={newConfig}
-                style={{ width: "100%" }}
+                style={{ width: "100%", height: "100%"}}
+                useResizeHandler={true}
             />
         </div>
     )

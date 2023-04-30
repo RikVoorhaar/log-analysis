@@ -14,9 +14,10 @@ COPY ./requirements.txt /app
 RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY ./setup.cfg /app
 COPY ./pyproject.toml /app
-RUN pip install /app/
+RUN pip install -e /app/
 COPY dashboard/package*.json ./dashboard/
 RUN cd dashboard && npm ci
+
 
 # Copy the rest of the project files into the container
 COPY . .
