@@ -6,5 +6,5 @@ __pycache__
 *.egg-info
 .env
 **/node_modules
-dashboard/package-lock.json
+# dashboard/package-lock.json
 /build
