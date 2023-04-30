@@ -8,3 +8,4 @@ __pycache__
 **/node_modules
 # dashboard/package-lock.json
 /build
+parser.log

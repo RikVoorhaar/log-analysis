@@ -64,6 +64,8 @@ def make_pages_df(df: pl.DataFrame):
     df_pages = df.filter(
         (pl.col("request_uri").str.ends_with("/")) & (pl.col("status") == 200)
     )
+    if len(df_pages) == 0:
+        return df_pages
     df_pages = df_pages.select(
         ["request_id", "request_uri", "addr", "time", "connection"]
     ).with_columns(
@@ -104,7 +106,15 @@ def make_insert_pages(start_date, end_date):
     remap = {"time_iso8601": "time", "http_x_forwarded_for": "addr"}
     access_df.columns = [remap.get(c, c) for c in access_df.columns]
 
+    if len(access_df) == 0:
+        logger.info("Empty acces dataframe; skipping")
+        return
+
     pages_df = make_pages_df(access_df)
+    if len(pages_df) == 0:
+        logger.info("Empty pages dataframe; skipping")
+        return
+
     logger.info(f"Made pages dataframe with shape {pages_df.shape}")
     with engine.connect() as conn:
         stmt = pages_log.insert().prefix_with("OR IGNORE").values(pages_df.rows())

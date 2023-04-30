@@ -3,6 +3,7 @@ Todo:
 <!-- - Bug formatting is messed up on page load? I think we need to reload the DOM after the plotly graphs have loaded.  -->
 <!-- - Make docker container -->
 - Make scripts for periodically ingesting logs
+- Make number of active countries configurable
 - Deploy
 - Darkmode?
 
