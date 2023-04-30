@@ -4,7 +4,7 @@ import json
 import dateutil.parser
 import polars as pl
 from io import TextIOWrapper
-from tqdm import tqdm
+from time import perf_counter
 
 from log_parsing.database_def import TableNames, create_engine_table
 from log_parsing.config import PROJECT_ROOT, logger
@@ -19,6 +19,9 @@ def parse_data(data: dict, columns) -> dict:
 
 
 def ingest_access_log(log_file: TextIOWrapper):
+    """
+    Ingest the access log into the database.
+    """
     engine, tables = create_engine_table()
     access_log = tables[TableNames.ACCESS_LOG]
     columns = frozenset(access_log.columns.keys())
@@ -30,7 +33,7 @@ def ingest_access_log(log_file: TextIOWrapper):
         batch_size = 1000
         data_list = []
         stmt = access_log.insert().prefix_with("OR IGNORE")
-        for _, line in enumerate(tqdm(log_file)):
+        for line in log_file:
             data = json.loads(line)
             data = parse_data(data, columns)
 
@@ -55,6 +58,9 @@ def ingest_access_log(log_file: TextIOWrapper):
 
 
 def make_pages_df(df: pl.DataFrame):
+    """
+    Parse the `access_log` table to create the `pages_log` table.
+    """
     df_pages = df.filter(
         (pl.col("request_uri").str.ends_with("/")) & (pl.col("status") == 200)
     )
@@ -82,6 +88,10 @@ def make_pages_df(df: pl.DataFrame):
 
 
 def make_insert_pages(start_date, end_date):
+    """
+    Wrangle the data from the `access_log` table in between start_date and end_date
+    and upsert in the `pages_log` table.
+    """
     engine, tables = create_engine_table()
     access_log = tables[TableNames.ACCESS_LOG]
     pages_log = tables[TableNames.PAGES_LOG]
@@ -119,6 +129,20 @@ def load_df_from_db(
         remap = {"time_iso8601": "time"}
         df.columns = [remap.get(c, c) for c in df.columns]
     return df
+
+
+def parse_ingest_file(file: TextIOWrapper):
+    time_before = perf_counter()
+    logger.info("Ingesting access log into database")
+    start_date, end_date = ingest_access_log(file)
+    time_taken_ms = (perf_counter() - time_before) * 1000
+    logger.info(f"Ingest took {time_taken_ms:.2f} ms")
+
+    time_before = perf_counter()
+    logger.info(f"(Re)parsing access table from {start_date} to {end_date}")
+    make_insert_pages(start_date, end_date)
+    time_taken_ms = (perf_counter() - time_before) * 1000
+    logger.info(f"Reparse took {time_taken_ms:.2f} ms")
 
 
 def _main():

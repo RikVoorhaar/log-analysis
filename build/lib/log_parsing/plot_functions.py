@@ -534,7 +534,7 @@ def modify_layout(
 ) -> Callable[[list[FilteredDataFrame]], go.Figure]:
     def new_plot_func(filtered_dfs: list[FilteredDataFrame]) -> go.Figure:
         fig = plot_func(filtered_dfs)
-        fig.update_layout(margin=GO_MARGIN)
+        fig.update_layout(margin=GO_MARGIN, autosize=False)
         return fig
 
     return new_plot_func

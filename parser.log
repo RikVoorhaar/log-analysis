@@ -4635,3 +4635,95 @@ ValueError: You need to install pyarrow first
     request /filter-data/ from 127.0.0.1 took 1.77 ms
 2023-04-30 10:39:57,647 | app | INFO
     request /filter-data/ from 127.0.0.1 took 85.06 ms
+2023-04-30 11:24:39,176 | config | INFO
+    Logger initialized
+2023-04-30 11:24:39,185 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 11:24:39,185 | config | ERROR
+    Exception occurred
+Traceback (most recent call last):
+  File "/home/rik/git/log-analysis/scripts/ingest_log.py", line 1, in <module>
+    from log_parsing.parse_access_log import parse_ingest_file
+ImportError: cannot import name 'parse_ingest_file' from 'log_parsing.parse_access_log' (/home/rik/git/log-analysis/.venv/lib/python3.10/site-packages/log_parsing/parse_access_log.py)
+2023-04-30 11:24:59,826 | config | INFO
+    Logger initialized
+2023-04-30 11:24:59,859 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 11:25:00,362 | config | INFO
+    Logger initialized
+2023-04-30 11:25:00,372 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 11:25:00,374 | parse_access_log | INFO
+    Ingesting access log into database
+2023-04-30 11:25:01,002 | parse_access_log | INFO
+    Commited 18143 from access log with date range 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 11:25:01,002 | parse_access_log | INFO
+    Ingest took 628.02 ms
+2023-04-30 11:25:01,002 | parse_access_log | INFO
+    (Re)parsing access table from 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 11:25:01,103 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 11:25:01,103 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 11:25:02,491 | parse_access_log | INFO
+    Made pages dataframe with shape (1213, 13)
+2023-04-30 11:25:02,758 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-04-30 11:25:02,759 | parse_access_log | INFO
+    Reparse took 1756.81 ms
+2023-04-30 11:26:27,104 | config | INFO
+    Logger initialized
+2023-04-30 11:26:27,135 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 11:26:27,810 | config | INFO
+    Logger initialized
+2023-04-30 11:26:27,819 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 11:26:27,821 | parse_access_log | INFO
+    Ingesting access log into database
+2023-04-30 11:26:28,314 | parse_access_log | INFO
+    Commited 18143 from access log with date range 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 11:26:28,314 | parse_access_log | INFO
+    Ingest took 492.55 ms
+2023-04-30 11:26:28,314 | parse_access_log | INFO
+    (Re)parsing access table from 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 11:26:28,388 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 11:26:28,389 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 11:26:29,594 | parse_access_log | INFO
+    Made pages dataframe with shape (1213, 13)
+2023-04-30 11:26:29,849 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-04-30 11:26:29,849 | parse_access_log | INFO
+    Reparse took 1535.13 ms
+2023-04-30 09:29:19,691 | config | INFO
+    Logger initialized
+2023-04-30 09:29:19,765 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 09:29:20,496 | config | INFO
+    Logger initialized
+2023-04-30 09:29:20,553 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 09:29:23,208 | config | INFO
+    Logger initialized
+2023-04-30 09:29:23,220 | geolocation | INFO
+    Geolite database already downloaded. Skipping download.
+2023-04-30 09:29:23,223 | parse_access_log | INFO
+    Ingesting access log into database
+2023-04-30 09:29:23,797 | parse_access_log | INFO
+    Commited 18143 from access log with date range 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 09:29:23,797 | parse_access_log | INFO
+    Ingest took 574.47 ms
+2023-04-30 09:29:23,797 | parse_access_log | INFO
+    (Re)parsing access table from 2023-01-08 12:54:45+00:00 to 2023-01-15 12:45:11+00:00
+2023-04-30 09:29:24,012 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 09:29:24,032 | geolocation | INFO
+    Getting country info for 1213 addresses.
+2023-04-30 09:29:24,199 | parse_access_log | INFO
+    Made pages dataframe with shape (1213, 13)
+2023-04-30 09:29:24,467 | parse_access_log | INFO
+    Inserted pages dataframe into database.
+2023-04-30 09:29:24,468 | parse_access_log | INFO
+    Reparse took 670.38 ms
