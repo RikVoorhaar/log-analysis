@@ -6,13 +6,28 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    # restart: always
+      -  /home/rik/website/nginx_log:/app/nginx_log
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logdashboard.rule=Host(`dashboard.rikvoorhaar.com`)"
+      - "traefik.http.routers.logdashboard.entrypoints=websecure"
+      - "traefik.http.routers.logdashboard.tls=true"
+      - "traefik.http.routers.logdashboard.tls.certresolver=myresolver"
+
     environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_HOST_PORT=${FLASK_HOST_PORT}
+      - FLASK_SERVER_NAME=${FLASK_SERVER_NAME}
       - PROJECT_ROOT=/app
     ports:
-      - "8080:8080"
+      - "8081:8080"
+    networks:
+      - web
+      - internal
   
 networks:
+  internal:
   web:
     external: true
 

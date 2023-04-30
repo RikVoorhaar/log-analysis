@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import logging
 from time import perf_counter
 from functools import wraps
@@ -23,9 +24,14 @@ PLOT_COLOR_SCHEME = px.colors.qualitative.T10
 
 
 app = Flask(__name__, static_folder=PUBLIC)
-app.testing = True
-app.debug = True
-app.logger.setLevel(logging.DEBUG)
+app.config.update(
+    SERVER_NAME = os.environ.get("FLASK_SERVER_NAME", "localhost"),
+    SECRET_KEY=os.environ["FLASK_SECRET_KEY"],
+)
+
+# app.testing = True
+# app.debug = True
+# app.logger.setLevel(logging.DEBUG)
 
 df = load_df_from_db(TableNames.PAGES_LOG)
 date_start = df["time"].min()
