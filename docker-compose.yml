@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app
+      # - .:/app
       -  /home/rik/website/nginx_log:/app/nginx_log
     restart: always
     labels:
