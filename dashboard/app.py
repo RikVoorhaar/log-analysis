@@ -1,11 +1,17 @@
 from pathlib import Path
 import os
-import logging
 from time import perf_counter
 from functools import wraps
 
 import plotly.express as px
-from flask import Flask, jsonify, request, send_from_directory, make_response
+from flask import (
+    Flask,
+    jsonify,
+    request,
+    send_from_directory,
+    make_response,
+    Response,
+)
 from pydantic import ValidationError, parse_obj_as
 
 # from dash import Dash, Input, Output, dcc, html
@@ -25,7 +31,7 @@ PLOT_COLOR_SCHEME = px.colors.qualitative.T10
 
 app = Flask(__name__, static_folder=PUBLIC)
 app.config.update(
-    SERVER_NAME = os.environ.get("FLASK_SERVER_NAME", "localhost"),
+    SERVER_NAME=os.environ.get("FLASK_SERVER_NAME", "localhost"),
     SECRET_KEY=os.environ["FLASK_SECRET_KEY"],
 )
 
@@ -132,6 +138,15 @@ def parse_filters():
 @app.route("/")
 def index():
     return send_from_directory(PUBLIC, "index.html")
+
+
+@app.route("/dashboard-fragment")
+def dashboard_fragment():
+    html_fragment = """
+    <div id="root"></div>
+    <script src="../dist/bundle.js"></script>
+    """
+    return Response(html_fragment, mimetype="text/html")
 
 
 @app.route("/dist/<path:path>")

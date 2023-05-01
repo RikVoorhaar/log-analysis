@@ -9,3 +9,4 @@ __pycache__
 # dashboard/package-lock.json
 /build
 parser.log
+dashboard/dist

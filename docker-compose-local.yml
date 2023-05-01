@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  logdashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+
+    environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_HOST_PORT=${FLASK_HOST_PORT}
+      - FLASK_SERVER_NAME=${FLASK_SERVER_NAME}
+      - PROJECT_ROOT=/app
+    
+    ports:
+      - ${FLASK_HOST_PORT}:${FLASK_HOST_PORT}
